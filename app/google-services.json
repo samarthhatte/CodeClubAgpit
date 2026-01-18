@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "587239389317",
+    "project_id": "codeclubagpit",
+    "storage_bucket": "codeclubagpit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587239389317:android:ff5724c8b2178147d351ec",
+        "android_client_info": {
+          "package_name": "com.agpitcodeclub.codeclubagpit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587239389317-ccn5fe27jieoks351mchbs56aojlrahi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agpitcodeclub.codeclubagpit",
+            "certificate_hash": "6980c2d4b43143d4575a9cfacce26c3bc815faac"
+          }
+        },
+        {
+          "client_id": "587239389317-2u3qk75sv2cknpirg5gls9aeb918n17r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTTzMEzzBfilFYL2KK3whxhqUBuU5GUo4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587239389317-2u3qk75sv2cknpirg5gls9aeb918n17r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
