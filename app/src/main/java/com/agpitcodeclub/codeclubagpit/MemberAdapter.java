@@ -6,7 +6,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberViewHolder> {
 
@@ -30,6 +35,18 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
         UserModel user = memberList.get(position);
         holder.nameText.setText(user.getName());
 
+        String imageUrl = user.getProfilePic();
+
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(imageUrl)
+                    .placeholder(R.drawable.ic_user_placeholder)
+                    .circleCrop()
+                    .into(holder.imgMember);
+        } else {
+            holder.imgMember.setImageResource(R.drawable.ic_user_placeholder);
+        }
+
         // Convert skills list to a single string
         if (user.getSkills() != null) {
             holder.skillsText.setText(String.join(", ", user.getSkills()));
@@ -42,12 +59,16 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
     }
 
     public static class MemberViewHolder extends RecyclerView.ViewHolder {
+
+        CircleImageView imgMember;   // ✅ ADD THIS
         TextView nameText, skillsText;
 
         public MemberViewHolder(@NonNull View itemView) {
             super(itemView);
+            imgMember = itemView.findViewById(R.id.imgMember); // ✅ BIND IT
             nameText = itemView.findViewById(R.id.txtName);
             skillsText = itemView.findViewById(R.id.txtSkills);
         }
     }
+
 }
