@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         MaterialCardView cardProfile = findViewById(R.id.cardProfile);
         cardProfile.setOnClickListener(v -> {
-            Toast.makeText(this, "Profile page Coming Soon!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         } );
 
         MaterialCardView cardAlumni = findViewById(R.id.cardAlumni);

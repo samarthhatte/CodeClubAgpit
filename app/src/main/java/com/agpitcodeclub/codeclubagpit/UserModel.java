@@ -7,22 +7,30 @@ public class UserModel {
     private String role;
     private String githubLink;
     private List<String> skills;
-    private String profileImageUrl;
+    private String profilePic; // Changed from profileImageUrl to match Firestore architecture
 
     // Empty constructor required for Firebase Firestore
     public UserModel() {}
 
-    public UserModel(String name, String role, String githubLink, List<String> skills) {
+    public UserModel(String name, String role, String githubLink, List<String> skills, String profilePic) {
         this.name = name;
         this.role = role;
         this.githubLink = githubLink;
         this.skills = skills;
+        this.profilePic = profilePic;
     }
 
-    // Getters and Setters
+    // Getters
     public String getName() { return name; }
     public String getRole() { return role; }
     public String getGithubLink() { return githubLink; }
     public List<String> getSkills() { return skills; }
-    public String getProfileImageUrl() { return profileImageUrl; }
+    public String getProfilePic() { return profilePic; }
+
+    // Setters (Required if you want to modify objects locally before saving)
+    public void setName(String name) { this.name = name; }
+    public void setRole(String role) { this.role = role; }
+    public void setGithubLink(String githubLink) { this.githubLink = githubLink; }
+    public void setSkills(List<String> skills) { this.skills = skills; }
+    public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
 }

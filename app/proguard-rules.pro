@@ -1,21 +1,29 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# 1. Preserve line numbers and source file names for better crash logs
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# 2. Firestore Rules: Prevents the BeanMapper / CustomClassMapper crash
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.google.firebase.firestore.** { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# 3. Cloudinary Rules: Ensures the MediaManager and UploadCallbacks work
+-keep class com.cloudinary.** { *; }
+-keep interface com.cloudinary.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# 4. Glide Rules: Prevents "Cannot resolve symbol" issues in production
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep class com.bumptech.glide.** { *; }
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+# 5. Your Project Models: CRITICAL to prevent mapping errors
+# This ensures Firestore can find your MemberModel and UserModel fields
+-keep class com.agpitcodeclub.codeclubagpit.** { *; }
+-keepclassmembers class com.agpitcodeclub.codeclubagpit.** {
+    public <init>(...);
+    public *** get*();
+    public void set*(***);
+}
