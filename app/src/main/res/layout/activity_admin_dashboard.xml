@@ -106,5 +106,13 @@
             </com.google.android.material.card.MaterialCardView>
 
         </GridLayout>
+        <Button
+            android:id="@+id/btnAdminLogout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Logout Admin"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="#D32F2F"
+            app:icon="@drawable/ic_logout" />
     </LinearLayout>
 </ScrollView>

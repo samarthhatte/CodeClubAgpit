@@ -40,6 +40,8 @@ public class MembersActivity extends AppCompatActivity {
         rvMembers.setAdapter(adapter);
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
+
+// 1️⃣ Attach listener FIRST
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -49,9 +51,15 @@ public class MembersActivity extends AppCompatActivity {
             @Override public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        // Initial fetch
-        fetchMembers("student");
+// 2️⃣ Select tab ONCE (this triggers fetchMembers automatically)
+        int openTabIndex = getIntent().getIntExtra("OPEN_TAB_INDEX", 0);
+        TabLayout.Tab tab = tabLayout.getTabAt(openTabIndex);
+        if (tab != null) {
+            tab.select();
+            fetchMembers(openTabIndex == 0 ? "student" : "alumni");
+        }
     }
+
 
     private void fetchMembers(String role) {
         db.collection("users")
