@@ -146,8 +146,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Logout"
+            app:icon="@drawable/ic_logout"
             android:layout_marginTop="32dp"
             android:backgroundTint="#D32F2F"/>
+
 
     </LinearLayout>
 </ScrollView>
