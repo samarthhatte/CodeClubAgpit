@@ -16,14 +16,16 @@
         android:padding="16dp"
         android:gravity="center_vertical">
 
+        <!-- Profile Image -->
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgMember"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@android:drawable/sym_def_app_icon"
+            android:src="@drawable/ic_user_placeholder"
             app:civ_border_width="1dp"
             app:civ_border_color="#FF000000"/>
 
+        <!-- Name & Skills -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -49,15 +51,52 @@
                 android:textColor="#757575"
                 android:layout_marginTop="4dp"/>
 
+            <!-- Social Icons Row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnGithub"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_github"
+                    android:contentDescription="GitHub"/>
+
+                <ImageButton
+                    android:id="@+id/btnLinkedIn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_linkedin"
+                    android:contentDescription="LinkedIn"/>
+
+                <ImageButton
+                    android:id="@+id/btnEmail"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_email"
+                    android:contentDescription="Email"/>
+
+                <ImageButton
+                    android:id="@+id/btnPortfolio"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_link"
+                    android:contentDescription="Portfolio"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btnGithub"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@android:drawable/ic_menu_info_details"
-            android:contentDescription="GitHub Profile" />
-
     </LinearLayout>
+
 </com.google.android.material.card.MaterialCardView>
