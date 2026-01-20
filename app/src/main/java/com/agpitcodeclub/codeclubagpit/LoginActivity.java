@@ -7,15 +7,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,9 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         Button btnLogin = findViewById(R.id.btnLogin);
         // Inside LoginActivity onCreate
         TextView tvGoToSignup = findViewById(R.id.tvSignup);
-        tvGoToSignup.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-        });
+        tvGoToSignup.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignupActivity.class)));
 
         btnLogin.setOnClickListener(v -> loginUser());
 
@@ -59,13 +55,13 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         checkUserRole();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Auth Failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Auth Failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
     private void checkUserRole() {
-        String uid = mAuth.getCurrentUser().getUid();
+        String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
         db.collection("users").document(uid).get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 String role = documentSnapshot.getString("role");
@@ -82,9 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Profile not found. Please register.", Toast.LENGTH_SHORT).show();
                 mAuth.signOut();
             }
-        }).addOnFailureListener(e -> {
-            Toast.makeText(this, "Database Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        });
+        }).addOnFailureListener(e -> Toast.makeText(this, "Database Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     @Override

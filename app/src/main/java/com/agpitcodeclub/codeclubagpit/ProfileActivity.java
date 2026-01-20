@@ -9,15 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.cloudinary.android.callback.ErrorInfo;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -27,19 +25,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private ShapeableImageView ivProfilePic;
     private TextView tvUserName;
     private ChipGroup cgSkills;
-    private Button btnAddSkill;
-    private FloatingActionButton btnEditPic;
 
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private String currentUserId;
 
@@ -53,15 +47,15 @@ public class ProfileActivity extends AppCompatActivity {
         // Cloudinary Init (ONLY ONCE)
 
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        currentUserId = mAuth.getCurrentUser().getUid();
+        currentUserId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         ivProfilePic = findViewById(R.id.ivProfilePic);
         tvUserName = findViewById(R.id.tvUserName);
         cgSkills = findViewById(R.id.cgSkills);
-        btnAddSkill = findViewById(R.id.btnAddSkill);
-        btnEditPic = findViewById(R.id.btnEditPic);
+        Button btnAddSkill = findViewById(R.id.btnAddSkill);
+        FloatingActionButton btnEditPic = findViewById(R.id.btnEditPic);
 
         loadUserProfile();
 
