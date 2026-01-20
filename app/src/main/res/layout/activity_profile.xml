@@ -9,10 +9,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:gravity="center_horizontal">
 
+        <!-- Profile Image -->
         <RelativeLayout
             android:layout_width="140dp"
             android:layout_height="140dp"
@@ -22,44 +23,45 @@
                 android:id="@+id/ivProfilePic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="4dp"
+                android:src="@drawable/ic_user_placeholder"
                 android:scaleType="centerCrop"
+                android:padding="4dp"
                 app:strokeColor="@color/teal_700"
                 app:strokeWidth="3dp"
-                app:shapeAppearanceOverlay="@style/CircleImage"
-                android:src="@drawable/ic_user_placeholder" />
+                app:shapeAppearanceOverlay="@style/CircleImage"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnEditPic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="4dp"
+                android:layout_alignParentEnd="true"
                 app:fabSize="mini"
+                app:srcCompat="@drawable/baseline_edit_24"
                 app:backgroundTint="@color/teal_700"
-                app:tint="@android:color/white"
-                app:srcCompat="@drawable/ic_edit" />
+                app:tint="@android:color/white"/>
         </RelativeLayout>
 
+        <!-- Name -->
         <TextView
             android:id="@+id/tvUserName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="Student Name"
-            android:textColor="#212121"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#212121"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/tvUserRole"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Android Developer"
+            android:textSize="16sp"
             android:textColor="#757575"
-            android:textSize="16sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
+        <!-- ===== Technical Skills (UNCHANGED) ===== -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,26 +79,139 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Technical Skills"
-                    android:textColor="@color/teal_700"
-                    android:textSize="14sp"
+                    android:textAllCaps="true"
                     android:textStyle="bold"
-                    android:textAllCaps="true"/>
+                    android:textColor="@color/teal_700"
+                    android:textSize="14sp"/>
+
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/cgSkills"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    app:chipSpacingVertical="8dp" />
+                    app:chipSpacingVertical="8dp"/>
 
                 <Button
                     android:id="@+id/btnAddSkill"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="+ Add New Skill"
-                    app:icon="@drawable/ic_edit" />
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:text=" Add New Skill"
+                    app:icon="@drawable/baseline_edit_24"/>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ===== Social & Contact Info (NEW) ===== -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- GitHub -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/etGithub"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="GitHub Profile"
+                        android:enabled="false"
+                        android:inputType="textUri"
+                        android:paddingEnd="40dp"/>
+
+                    <ImageButton
+                        android:id="@+id/btnEditGithub"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@null"
+                        android:src="@drawable/baseline_edit_24"/>
+                </RelativeLayout>
+
+                <!-- LinkedIn -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+
+                    <EditText
+                        android:id="@+id/etLinkedIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="LinkedIn Profile"
+                        android:enabled="false"
+                        android:inputType="textUri"
+                        android:paddingEnd="40dp"/>
+
+                    <ImageButton
+                        android:id="@+id/btnEditLinkedIn"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@null"
+                        android:src="@drawable/baseline_edit_24"/>
+                </RelativeLayout>
+
+                <!-- Email -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email Address"
+                        android:enabled="false"
+                        android:inputType="textEmailAddress"
+                        android:paddingEnd="40dp"/>
+
+                    <ImageButton
+                        android:id="@+id/btnEditEmail"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@null"
+                        android:src="@drawable/baseline_edit_24"/>
+                </RelativeLayout>
+
+                <!-- Portfolio -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp">
+
+                    <EditText
+                        android:id="@+id/etPortfolio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Portfolio Website"
+                        android:enabled="false"
+                        android:inputType="textUri"
+                        android:paddingEnd="40dp"/>
+
+                    <ImageButton
+                        android:id="@+id/btnEditPortfolio"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@null"
+                        android:src="@drawable/baseline_edit_24"/>
+                </RelativeLayout>
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

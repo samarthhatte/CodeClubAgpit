@@ -24,7 +24,10 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import android.widget.ImageButton;
 
+
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -33,6 +36,11 @@ public class ProfileActivity extends AppCompatActivity {
     private ShapeableImageView ivProfilePic;
     private TextView tvUserName;
     private ChipGroup cgSkills;
+    private EditText etGithub, etLinkedIn, etEmail, etPortfolio;
+    private ImageButton btnEditGithub, btnEditLinkedIn, btnEditEmail, btnEditPortfolio;
+    private EditText currentEditingField = null;
+
+
 
     private FirebaseFirestore db;
     private String currentUserId;
@@ -56,6 +64,22 @@ public class ProfileActivity extends AppCompatActivity {
         cgSkills = findViewById(R.id.cgSkills);
         Button btnAddSkill = findViewById(R.id.btnAddSkill);
         FloatingActionButton btnEditPic = findViewById(R.id.btnEditPic);
+        etGithub = findViewById(R.id.etGithub);
+        etLinkedIn = findViewById(R.id.etLinkedIn);
+        etEmail = findViewById(R.id.etEmail);
+        etPortfolio = findViewById(R.id.etPortfolio);
+
+        btnEditGithub = findViewById(R.id.btnEditGithub);
+        btnEditLinkedIn = findViewById(R.id.btnEditLinkedIn);
+        btnEditEmail = findViewById(R.id.btnEditEmail);
+        btnEditPortfolio = findViewById(R.id.btnEditPortfolio);
+
+// Pencil click handlers
+        btnEditGithub.setOnClickListener(v -> enableEdit(etGithub, "github"));
+        btnEditLinkedIn.setOnClickListener(v -> enableEdit(etLinkedIn, "linkedin"));
+        btnEditEmail.setOnClickListener(v -> enableEdit(etEmail, "email"));
+        btnEditPortfolio.setOnClickListener(v -> enableEdit(etPortfolio, "portfolio"));
+
 
         loadUserProfile();
 
@@ -70,6 +94,22 @@ public class ProfileActivity extends AppCompatActivity {
                         // Safety check for name
                         String name = doc.getString("name");
                         tvUserName.setText(name != null ? name : "AGPIT Member");
+
+                        etGithub.setText(doc.getString("github"));
+                        etLinkedIn.setText(doc.getString("linkedin"));
+                        etEmail.setText(doc.getString("email"));
+                        etPortfolio.setText(doc.getString("portfolio"));
+
+// Load skills
+// Load skills safely
+                        List<String> skills = (List<String>) doc.get("skills");
+                        if (skills != null) {
+                            cgSkills.removeAllViews(); // Clear existing chips to avoid duplicates
+                            for (String skill : skills) {
+                                addSkillChip(skill);
+                            }
+                        }
+
 
                         String photoUrl = doc.getString("profilePic");
                         if (photoUrl != null && !photoUrl.isEmpty()) {
@@ -190,4 +230,59 @@ public class ProfileActivity extends AppCompatActivity {
         );
         cgSkills.addView(chip);
     }
+
+    private void enableEdit(EditText editText, String fieldName) {
+
+        // If clicking same field again → SAVE
+        if (currentEditingField == editText) {
+            saveField(editText, fieldName);
+            editText.setEnabled(false);
+            currentEditingField = null;
+            return;
+        }
+
+        // 🔥 SAVE previous field BEFORE switching
+        if (currentEditingField != null) {
+            String previousFieldName = (String) currentEditingField.getTag();
+            saveField(currentEditingField, previousFieldName);
+            currentEditingField.setEnabled(false);
+        }
+
+        // EDIT MODE
+        editText.setEnabled(true);
+        editText.requestFocus();
+        editText.setSelection(editText.getText().length());
+
+        // 🔐 Store field name safely
+        editText.setTag(fieldName);
+        currentEditingField = editText;
+
+        Toast.makeText(this, "Editing enabled", Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    private void saveField(EditText editText, String fieldName) {
+        String value = editText.getText().toString().trim();
+
+        editText.setEnabled(false);
+
+        if (value.isEmpty()) return;
+
+        Map<String, Object> data = new java.util.HashMap<>();
+        data.put(fieldName, value);
+
+        db.collection("users")
+                .document(currentUserId)
+                .set(data, com.google.firebase.firestore.SetOptions.merge())
+                .addOnSuccessListener(aVoid ->
+                        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+                )
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Save failed", Toast.LENGTH_SHORT).show()
+                );
+    }
+
+
+
 }

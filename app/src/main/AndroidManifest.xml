@@ -3,9 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="com.google.android.gms.permission.AD_ID"
-        tools:node="remove" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <queries>
@@ -22,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CodeClubAgpit"
-        tools:targetApi="31">
+        tools:targetApi="31" >
 
     <activity
             android:name=".ProfileActivity"
@@ -70,10 +67,6 @@
         <activity
             android:name=".AdminDashboardActivity"
             android:exported="false" />
-
-        <meta-data
-            android:name="google_analytics_adid_collection_enabled"
-            android:value="false" />
     </application>
 
 </manifest>
