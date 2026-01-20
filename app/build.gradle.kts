@@ -12,8 +12,8 @@ android {
         applicationId = "com.agpitcodeclub.codeclubagpit"
         minSdk = 24
         targetSdk = 35
-        versionCode = 7
-        versionName = "1.7"
+        versionCode = 10
+        versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,13 +35,6 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.firestore)
     implementation("com.google.firebase:firebase-messaging")
     implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
     implementation("com.google.firebase:firebase-analytics")
@@ -53,7 +46,19 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
     implementation("com.cloudinary:cloudinary-android:2.3.1")
+    implementation("com.facebook.soloader:soloader:0.10.5")
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.activity)
+    implementation(libs.constraintlayout)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+}
+configurations.all {
+    resolutionStrategy {
+        force("com.facebook.soloader:soloader:0.10.5")
+    }
 }

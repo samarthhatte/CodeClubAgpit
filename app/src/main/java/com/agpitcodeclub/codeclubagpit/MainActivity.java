@@ -1,5 +1,6 @@
 package com.agpitcodeclub.codeclubagpit;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -10,7 +11,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.Manifest; // Add this line
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,13 +20,12 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.messaging.FirebaseMessaging; // Add this import
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private TextView tvWelcome;
-    private Button btnLogout;
     private static final int NOTIFICATION_PERMISSION_CODE = 101;
 
     @Override
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnLogout = findViewById(R.id.btnLogout);
+        Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> {
             mAuth.signOut();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -64,14 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
         // ADD THIS FOR YOUR EVENTS PAGE
         MaterialCardView cardEvents = findViewById(R.id.cardEvents);
-        cardEvents.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, EventsActivity.class));
-        });
+        cardEvents.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, EventsActivity.class)));
 
         MaterialCardView cardProfile = findViewById(R.id.cardProfile);
-        cardProfile.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-        } );
+        cardProfile.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
 
         MaterialCardView cardAlumni = findViewById(R.id.cardAlumni);
         cardAlumni.setOnClickListener(v -> {

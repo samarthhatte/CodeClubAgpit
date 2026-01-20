@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,8 +16,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberViewHolder> {
 
-    private List<UserModel> memberList;
-    private boolean isAdmin;
+    private final List<UserModel> memberList;
+    private final boolean isAdmin;
 
     public MemberAdapter(List<UserModel> memberList, boolean isAdmin) {
         this.memberList = memberList;

@@ -9,15 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.cloudinary.android.callback.ErrorInfo;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.callback.ErrorInfo;
 import com.cloudinary.android.callback.UploadCallback;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -27,8 +25,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
