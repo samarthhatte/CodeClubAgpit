@@ -17,11 +17,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberViewHolder> {
 
     private final List<UserModel> memberList;
-    private final boolean isAdmin;
 
     public MemberAdapter(List<UserModel> memberList, boolean isAdmin) {
         this.memberList = memberList;
-        this.isAdmin = isAdmin;
     }
 
     @NonNull

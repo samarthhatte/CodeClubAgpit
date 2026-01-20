@@ -26,16 +26,14 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private ShapeableImageView ivProfilePic;
     private TextView tvUserName;
     private ChipGroup cgSkills;
-    private Button btnAddSkill;
-    private FloatingActionButton btnEditPic;
 
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private String currentUserId;
 
@@ -49,15 +47,15 @@ public class ProfileActivity extends AppCompatActivity {
         // Cloudinary Init (ONLY ONCE)
 
 
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        currentUserId = mAuth.getCurrentUser().getUid();
+        currentUserId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         ivProfilePic = findViewById(R.id.ivProfilePic);
         tvUserName = findViewById(R.id.tvUserName);
         cgSkills = findViewById(R.id.cgSkills);
-        btnAddSkill = findViewById(R.id.btnAddSkill);
-        btnEditPic = findViewById(R.id.btnEditPic);
+        Button btnAddSkill = findViewById(R.id.btnAddSkill);
+        FloatingActionButton btnEditPic = findViewById(R.id.btnEditPic);
 
         loadUserProfile();
 

@@ -15,20 +15,18 @@ import java.util.List;
 
 public class MembersActivity extends AppCompatActivity {
 
-    private RecyclerView rvMembers;
     private FirebaseFirestore db;
     private List<UserModel> memberList;
     private MemberAdapter adapter;
-    private boolean isAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_members);
 
-        isAdmin = getIntent().getBooleanExtra("isAdmin", false);
+        boolean isAdmin = getIntent().getBooleanExtra("isAdmin", false);
         db = FirebaseFirestore.getInstance();
-        rvMembers = findViewById(R.id.rvMembers);
+        RecyclerView rvMembers = findViewById(R.id.rvMembers);
         rvMembers.setLayoutManager(new LinearLayoutManager(this));
 
         memberList = new ArrayList<>();
