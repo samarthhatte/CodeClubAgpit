@@ -2,24 +2,27 @@ package com.agpitcodeclub.codeclubagpit;
 
 import android.os.Bundle;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class EventsActivity extends AppCompatActivity {
 
     private RecyclerView rvEvents;
     private FirebaseFirestore db;
-    private List<Map<String, Object>> eventList = new ArrayList<>();
+    private final List<Map<String, Object>> eventList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +58,6 @@ public class EventsActivity extends AppCompatActivity {
                     EventAdapter adapter = new EventAdapter(eventList);
                     rvEvents.setAdapter(adapter);
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e -> Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

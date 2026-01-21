@@ -5,18 +5,15 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -55,19 +52,19 @@ public class SignupActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         saveUserToFirestore(name, email, github);
                     } else {
-                        Toast.makeText(this, "Auth Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Auth Failed: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     private void saveUserToFirestore(String name, String email, String github) {
-        String uid = mAuth.getCurrentUser().getUid();
+        String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("name", name);
         userMap.put("email", email);
         userMap.put("github", github);
         userMap.put("role", "student"); // Default role
-        userMap.put("skills", Arrays.asList("Java")); // Default skill to start
+        userMap.put("skills", Collections.singletonList("Java")); // Default skill to start
 
         db.collection("users").document(uid).set(userMap)
                 .addOnSuccessListener(aVoid -> {
