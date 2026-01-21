@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
+
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private TextView tvWelcome;
@@ -33,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        tvWelcome = findViewById(R.id.tvWelcome);
+
+        loadUserName();
+
+        // Logout
         Button btnLogout = findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> {
             mAuth.signOut();
@@ -40,61 +48,70 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
 
-        // 1. Initialize Notification Channel (Required for Android 8.0+)
+        // Notification Channel (Android 8+)
         createNotificationChannel();
 
-        // 2. Subscribe to topic for club-wide notifications
+        // Subscribe to FCM topic
         FirebaseMessaging.getInstance().subscribeToTopic("all_members")
                 .addOnCompleteListener(task -> {
-                    String msg = task.isSuccessful() ? "Subscribed to all_members" : "Subscription Failed";
+                    String msg = task.isSuccessful()
+                            ? "Subscribed to all_members"
+                            : "Subscription Failed";
                     Log.d("FCM_DEBUG", msg);
-                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                 });
 
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        tvWelcome = findViewById(R.id.tvWelcome);
-
-        loadUserName();
-
-        // --- Card Initializations and Listeners (Keep your existing code here) ---
+        // Cards
         MaterialCardView cardMembers = findViewById(R.id.cardMembers);
-        cardMembers.setOnClickListener(v -> startActivity(new Intent(this, MembersActivity.class)));
-
-        // ADD THIS FOR YOUR EVENTS PAGE
         MaterialCardView cardEvents = findViewById(R.id.cardEvents);
-        cardEvents.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, EventsActivity.class)));
-
         MaterialCardView cardProfile = findViewById(R.id.cardProfile);
-        cardProfile.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
+        MaterialCardView cardAboutUs = findViewById(R.id.cardAboutUs);
 
-        MaterialCardView cardAlumni = findViewById(R.id.cardAlumni);
-        cardAlumni.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MembersActivity.class);
-            intent.putExtra("OPEN_TAB_INDEX", 1); // Alumni tab
-            startActivity(intent);
-        });
-        // ... (remaining listeners)
+        cardMembers.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, MembersActivity.class)));
 
-        //check for notification permission for android 13 and above
+        cardEvents.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, EventsActivity.class)));
+
+        cardProfile.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class)));
+
+        cardAboutUs.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, AboutUsActivity.class)));
+
+        // Notification permission (Android 13+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
-                    PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATION_PERMISSION_CODE);
+            if (ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        NOTIFICATION_PERMISSION_CODE
+                );
             }
         }
-
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(
+            int requestCode,
+            @NonNull String[] permissions,
+            @NonNull int[] grantResults) {
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == NOTIFICATION_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Notifications Enabled!", Toast.LENGTH_SHORT).show();
+            if (grantResults.length > 0 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                Toast.makeText(this,
+                        "Notifications Enabled!",
+                        Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Notifications Disabled. You won't see club updates.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this,
+                        "Notifications Disabled. You won't see club updates.",
+                        Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -103,26 +120,29 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Code Club Alerts";
             String description = "Notifications for club events and updates";
-            int importance = NotificationManager.IMPORTANCE_HIGH; // High importance for banners
-            NotificationChannel channel = new NotificationChannel("club_channel", name, importance);
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel channel =
+                    new NotificationChannel("club_channel", name, importance);
             channel.setDescription(description);
 
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            NotificationManager manager =
+                    getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
         }
     }
 
     private void loadUserName() {
         if (mAuth.getCurrentUser() != null) {
             String uid = mAuth.getCurrentUser().getUid();
-            db.collection("users").document(uid).get().addOnSuccessListener(doc -> {
-                if (doc.exists()) {
-                    String name = doc.getString("name");
-                    tvWelcome.setText("Hello, " + name + "!");
-                }
-            });
+            db.collection("users").document(uid)
+                    .get()
+                    .addOnSuccessListener(doc -> {
+                        if (doc.exists()) {
+                            String name = doc.getString("name");
+                            tvWelcome.setText("Hello, " + name + "!");
+                        }
+                    });
         }
     }
-
-
 }

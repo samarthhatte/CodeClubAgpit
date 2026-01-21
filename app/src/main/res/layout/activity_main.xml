@@ -36,6 +36,7 @@
             android:alignmentMode="alignMargins"
             android:columnOrderPreserved="false">
 
+            <!-- Members -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardMembers"
                 android:layout_width="0dp"
@@ -44,15 +45,18 @@
                 android:layout_margin="8dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
+
                 <LinearLayout
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_people" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -62,31 +66,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardAlumni"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
-                <LinearLayout
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/ic_people" /> <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Alumni"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
+            <!-- Events -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardEvents"
                 android:layout_width="0dp"
@@ -95,15 +75,18 @@
                 android:layout_margin="8dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
+
                 <LinearLayout
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_notification" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -113,6 +96,37 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- About Us -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardAboutUs"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_info" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="About Us"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- My Profile -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardProfile"
                 android:layout_width="0dp"
@@ -121,15 +135,18 @@
                 android:layout_margin="8dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="4dp">
+
                 <LinearLayout
-                    android:gravity="center"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@android:drawable/ic_menu_edit" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -149,7 +166,6 @@
             app:icon="@drawable/ic_logout"
             android:layout_marginTop="32dp"
             android:backgroundTint="#D32F2F"/>
-
 
     </LinearLayout>
 </ScrollView>

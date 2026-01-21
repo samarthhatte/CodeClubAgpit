@@ -19,33 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CodeClubAgpit"
-        tools:targetApi="31" >
-
-    <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EventsActivity"
-            android:exported="false" />
-
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="club_channel" />
-
-        <service
-            android:name=".MyFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <activity
-            android:name=".AdminPushActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignupActivity"
-            android:exported="false" />
+        tools:targetApi="31">
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -55,6 +29,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AboutUsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EventsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminPushActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
@@ -67,6 +56,20 @@
         <activity
             android:name=".AdminDashboardActivity"
             android:exported="false" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="club_channel" />
+
+
     </application>
 
 </manifest>
