@@ -11,8 +11,15 @@
         android:background="?attr/colorPrimary"
         app:tabTextColor="#FFFFFF"
         app:tabSelectedTextColor="#FFEB3B">
-        <com.google.android.material.tabs.TabItem android:text="Current" />
-        <com.google.android.material.tabs.TabItem android:text="Alumni" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alumni" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/main"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <!-- Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manage Gallery Albums"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#333"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Create Album Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCreateAlbum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create New Album"
+        android:textAllCaps="false"
+        app:icon="@drawable/ic_add"
+        app:iconGravity="textStart"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Albums List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAdminAlbums"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp" />
+
+</LinearLayout>

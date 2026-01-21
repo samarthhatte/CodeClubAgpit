@@ -26,6 +26,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         MaterialCardView cardAddEvent = findViewById(R.id.cardAddEvent);
         MaterialCardView cardManageMembers = findViewById(R.id.cardManageMembers);
         MaterialCardView cardNotifications = findViewById(R.id.cardNotifications);
+        MaterialCardView cardGallery = findViewById(R.id.cardGallery);
 
         cardAddEvent.setOnClickListener(v -> startActivity(new Intent(this, AddEventActivity.class)));
 
@@ -37,6 +38,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
         // Trigger the Tagging Dialog when Notifications card is clicked
         cardNotifications.setOnClickListener(v -> startActivity(new Intent(this, AdminPushActivity.class)));
+
+        cardGallery.setOnClickListener(v -> startActivity(new Intent(this, AdminGallery.class)));
 
 
         // Inside onCreate

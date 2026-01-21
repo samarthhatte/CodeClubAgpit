@@ -12,8 +12,8 @@ android {
         applicationId = "com.agpitcodeclub.codeclubagpit"
         minSdk = 24
         targetSdk = 35
-        versionCode = 10
-        versionName = "2.0"
+        versionCode = 13
+        versionName = "2.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -38,10 +38,12 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging")
     implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
     implementation("com.google.firebase:firebase-storage")
+    implementation("com.github.chrisbanes:PhotoView:2.3.0")
     // Glide library for image loading
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
