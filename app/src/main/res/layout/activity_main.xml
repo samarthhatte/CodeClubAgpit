@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="2"
-            android:rowCount="2"
+            android:rowCount="3"
             android:alignmentMode="alignMargins"
             android:columnOrderPreserved="false">
 
@@ -58,11 +58,11 @@
                         android:src="@drawable/ic_people" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="Members"
                         android:textStyle="bold"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -88,11 +88,11 @@
                         android:src="@drawable/ic_notification" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="Events"
                         android:textStyle="bold"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -118,11 +118,11 @@
                         android:src="@drawable/ic_info" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="About Us"
                         android:textStyle="bold"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -148,11 +148,41 @@
                         android:src="@android:drawable/ic_menu_edit" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="My Profile"
                         android:textStyle="bold"
-                        android:layout_marginTop="8dp"/>
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Gallery (NEW) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardGallery"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_gallery" />
+
+                    <TextView
+                        android:text="Gallery"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

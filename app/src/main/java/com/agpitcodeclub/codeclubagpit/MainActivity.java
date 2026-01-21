@@ -65,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
         MaterialCardView cardEvents = findViewById(R.id.cardEvents);
         MaterialCardView cardProfile = findViewById(R.id.cardProfile);
         MaterialCardView cardAboutUs = findViewById(R.id.cardAboutUs);
+        MaterialCardView cardGallery = findViewById(R.id.cardGallery);
+
+        cardGallery.setOnClickListener(v -> {
+            startActivity(new Intent(this, GalleryActivity.class));
+        });
+
 
         cardMembers.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, MembersActivity.class)));

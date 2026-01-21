@@ -29,9 +29,9 @@ public class AboutUsActivity extends AppCompatActivity {
         rvFaculty.setAdapter(adapter);
 
         facultyList.add(new FacultyModel(
-                "Dr. V. V. Potdar",
-                "Principal",
-                "https://codeclubagpit.vercel.app/Principal-desk.jpeg.jpg"
+                "S. A. Patil",
+                "Secretary - AGPIT",
+                "https://codeclubagpit.vercel.app/SecretaryDesk.png"
         ));
 
         facultyList.add(new FacultyModel(
@@ -39,6 +39,20 @@ public class AboutUsActivity extends AppCompatActivity {
                 "Campus Director",
                 "https://codeclubagpit.vercel.app/campus_director_chougule_sir.jpg"
         ));
+
+        facultyList.add(new FacultyModel(
+                "Dr. V. V. Potdar",
+                "Principal",
+                "https://codeclubagpit.vercel.app/Principal-desk.jpeg.jpg"
+        ));
+
+        facultyList.add(new FacultyModel(
+                "Mr. S. V. Kulkarni",
+                "HOD - CSE",
+                "https://codeclubagpit.vercel.app/Kulkarni.jpg"
+        ));
+
+
 
         adapter.notifyDataSetChanged();
 
