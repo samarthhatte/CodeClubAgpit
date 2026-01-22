@@ -10,7 +10,7 @@
     </queries>
 
     <application
-        android:name=".MyApp"
+        android:name=".app.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -21,58 +21,58 @@
         android:theme="@style/Theme.CodeClubAgpit"
         tools:targetApi="31">
         <activity
-            android:name=".AlbumImagesActivity"
+            android:name=".ui.activities.AlbumImagesActivity"
             android:exported="false" />
         <activity
-            android:name=".GalleryActivity"
+            android:name=".ui.activities.GalleryActivity"
             android:exported="false" />
         <activity
-            android:name=".FullScreenImageActivity"
+            android:name=".ui.activities.FullScreenImageActivity"
             android:exported="false" />
         <activity
-            android:name=".FullImageActivity"
+            android:name=".ui.activities.FullImageActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminAlbumImagesActivity"
+            android:name=".ui.activities.AdminAlbumImagesActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminAlbumAdapter"
+            android:name=".ui.adapters.AdminAlbumAdapter"
             android:exported="false" />
         <activity
-            android:name=".CreateAlbumActivity"
+            android:name=".ui.activities.CreateAlbumActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminGallery"
+            android:name=".ui.activities.AdminGallery"
             android:exported="false" />
         <activity
-            android:name=".AboutUsActivity"
+            android:name=".ui.activities.AboutUsActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ui.activities.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".EventsActivity"
+            android:name=".ui.activities.EventsActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminPushActivity"
+            android:name=".ui.activities.AdminPushActivity"
             android:exported="false" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".ui.activities.SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".MembersActivity"
+            android:name=".ui.activities.MembersActivity"
             android:exported="false" />
         <activity
-            android:name=".AddEventActivity"
+            android:name=".ui.activities.AddEventActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminDashboardActivity"
+            android:name=".ui.activities.AdminDashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -82,7 +82,7 @@
         </activity>
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".firebase.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
