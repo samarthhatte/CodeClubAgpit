@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -78,9 +79,7 @@ public class AdminAlbumImagesActivity extends AppCompatActivity {
         imageList = new ArrayList<>();
 
         // 4️⃣ Init adapter ONCE with delete listener
-        adapter = new AdminAlbumImageAdapter(imageList, position -> {
-            showDeleteDialog(position);
-        });
+        adapter = new AdminAlbumImageAdapter(imageList, this::showDeleteDialog);
         rvAlbumImages.setAdapter(adapter);
 
         // 5️⃣ Load images from Firestore
@@ -163,7 +162,7 @@ public class AdminAlbumImagesActivity extends AppCompatActivity {
                     throws IOException {
 
                 try {
-                    JSONObject json = new JSONObject(response.body().string());
+                    JSONObject json = new JSONObject(Objects.requireNonNull(response.body()).string());
                     String imageUrl = json.getString("secure_url");
                     String publicId = json.getString("public_id");
 

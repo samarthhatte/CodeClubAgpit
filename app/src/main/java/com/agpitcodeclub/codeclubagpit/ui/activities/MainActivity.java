@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
+        redirectByRole();
         tvWelcome = findViewById(R.id.tvWelcome);
 
         loadUserName();
@@ -68,9 +70,7 @@ public class MainActivity extends AppCompatActivity {
         MaterialCardView cardAboutUs = findViewById(R.id.cardAboutUs);
         MaterialCardView cardGallery = findViewById(R.id.cardGallery);
 
-        cardGallery.setOnClickListener(v -> {
-            startActivity(new Intent(this, GalleryActivity.class));
-        });
+        cardGallery.setOnClickListener(v -> startActivity(new Intent(this, GalleryActivity.class)));
 
 
         cardMembers.setOnClickListener(v ->
@@ -99,6 +99,25 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void redirectByRole() {
+        if (mAuth.getCurrentUser() == null) return;
+
+        String uid = mAuth.getCurrentUser().getUid();
+
+        db.collection("users").document(uid)
+                .get()
+                .addOnSuccessListener(doc -> {
+                    String role = doc.getString("role");
+
+                    if ("admin".equals(role) || "super_admin".equals(role)) {
+                        startActivity(new Intent(this, AdminDashboardActivity.class));
+                        finish();
+                    }
+                    // else → stay in MainActivity (student/member)
+                });
+    }
+
 
     @Override
     public void onRequestPermissionsResult(

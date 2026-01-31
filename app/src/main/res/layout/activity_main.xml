@@ -55,6 +55,7 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:contentDescription="TODO"
                         android:src="@drawable/ic_people" />
 
                     <TextView
@@ -85,6 +86,7 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:contentDescription="TODO"
                         android:src="@drawable/ic_notification" />
 
                     <TextView
@@ -115,6 +117,7 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:contentDescription="TODO"
                         android:src="@drawable/ic_info" />
 
                     <TextView
@@ -145,6 +148,7 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:contentDescription="TODO"
                         android:src="@android:drawable/ic_menu_edit" />
 
                     <TextView

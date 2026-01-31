@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AddEventActivity extends AppCompatActivity {
 
@@ -94,7 +95,7 @@ public class AddEventActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(String requestId, Map resultData) {
-                        String imageUrl = resultData.get("secure_url").toString();
+                        String imageUrl = Objects.requireNonNull(resultData.get("secure_url")).toString();
                         saveEvent(title, date, desc, imageUrl);
                     }
 
