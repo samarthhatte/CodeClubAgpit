@@ -12,6 +12,7 @@ public class UserModel {
     private String linkedin;
     private String email;
     private String portfolio;
+    private String id;
 
 
     // Empty constructor required for Firebase Firestore
@@ -35,6 +36,7 @@ public class UserModel {
     public String getLinkedin() { return linkedin; }
     public String getEmail() { return email; }
     public String getPortfolio() { return portfolio; }
+    public String getId() { return id; }
 
 
     // Setters (Required if you want to modify objects locally before saving)
@@ -47,4 +49,6 @@ public class UserModel {
     public void setLinkedin(String linkedin) { this.linkedin = linkedin; }
     public void setEmail(String email) { this.email = email; }
     public void setPortfolio(String portfolio) { this.portfolio = portfolio; }
+    public void setId(String id) { this.id = id; }
+
 }

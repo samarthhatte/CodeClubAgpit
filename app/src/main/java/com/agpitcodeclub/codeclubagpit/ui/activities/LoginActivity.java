@@ -63,24 +63,52 @@ public class LoginActivity extends AppCompatActivity {
 
     private void checkUserRole() {
         String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-        db.collection("users").document(uid).get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                String role = documentSnapshot.getString("role");
-                if ("admin".equals(role)) {
-                    Toast.makeText(this, "Login Sucessful as Admin", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, AdminDashboardActivity.class));
-                } else {
-                    Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }
-                finish();
-            } else {
-                // Document missing? Send them to complete their profile (Signup)
-                Toast.makeText(this, "Profile not found. Please register.", Toast.LENGTH_SHORT).show();
-                mAuth.signOut();
-            }
-        }).addOnFailureListener(e -> Toast.makeText(this, "Database Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+
+        db.collection("users")
+                .document(uid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+
+                    if (!documentSnapshot.exists()) {
+                        Toast.makeText(this,
+                                "Profile not found. Please register.",
+                                Toast.LENGTH_SHORT).show();
+                        mAuth.signOut();
+                        return;
+                    }
+
+                    String role = documentSnapshot.getString("role");
+
+                    if ("admin".equals(role) || "super_admin".equals(role)) {
+                        Toast.makeText(this,
+                                "Login successful (" + role + ")",
+                                Toast.LENGTH_SHORT).show();
+
+                        startActivity(
+                                new Intent(LoginActivity.this,
+                                        AdminDashboardActivity.class)
+                        );
+
+                    } else {
+                        Toast.makeText(this,
+                                "Login successful",
+                                Toast.LENGTH_SHORT).show();
+
+                        startActivity(
+                                new Intent(LoginActivity.this,
+                                        MainActivity.class)
+                        );
+                    }
+
+                    finish();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this,
+                                "Database Error: " + e.getMessage(),
+                                Toast.LENGTH_SHORT).show()
+                );
     }
+
 
     @Override
     public void onStart() {

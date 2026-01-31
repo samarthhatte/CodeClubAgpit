@@ -13,7 +13,6 @@
 
         <!-- Header -->
         <TextView
-            android:id="@+id/tvAboutHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="About Code Club AGPIT"

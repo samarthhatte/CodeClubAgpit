@@ -59,7 +59,6 @@ public class GalleryActivity extends AppCompatActivity {
                     for (QueryDocumentSnapshot doc : snapshot) {
 
                         AlbumModel album = doc.toObject(AlbumModel.class);
-                        if (album == null) continue;
 
                         String albumId = doc.getId();
 
@@ -125,9 +124,7 @@ public class GalleryActivity extends AppCompatActivity {
                         db.collection("gallery")
                                 .document(albumId)
                                 .update("coverImage", null)
-                                .addOnSuccessListener(v -> {
-                                    fetchAlbums();
-                                });
+                                .addOnSuccessListener(v -> fetchAlbums());
                     }
                 });
     }

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.agpitcodeclub.codeclubagpit.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -60,17 +61,33 @@ public class SignupActivity extends AppCompatActivity {
 
     private void saveUserToFirestore(String name, String email, String github) {
         String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("name", name);
         userMap.put("email", email);
         userMap.put("github", github);
-        userMap.put("role", "student"); // Default role
-        userMap.put("skills", Collections.singletonList("Java")); // Default skill to start
+        userMap.put("skills", Collections.singletonList("Java"));
 
-        db.collection("users").document(uid).set(userMap)
-                .addOnSuccessListener(aVoid -> {
-                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                    finish();
+        db.collection("users")
+                .document(uid)
+                .get()
+                .addOnSuccessListener(doc -> {
+
+                    if (!doc.exists()) {
+                        userMap.put("role", "student");
+                    }
+
+                    db.collection("users")
+                            .document(uid)
+                            .set(userMap, SetOptions.merge())
+                            .addOnSuccessListener(unused -> {
+                                startActivity(new Intent(this, MainActivity.class));
+                                finish();
+                            })
+                            .addOnFailureListener(e ->
+                                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show()
+                            );
                 });
     }
+
 }
