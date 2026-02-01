@@ -12,8 +12,8 @@ android {
         applicationId = "com.agpitcodeclub.codeclubagpit"
         minSdk = 24
         targetSdk = 35
-        versionCode = 14
-        versionName = "2.4"
+        versionCode = 16
+        versionName = "2.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
