@@ -33,12 +33,13 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
-        // Inside LoginActivity onCreate
+        TextView tvForgotPassword = findViewById(R.id.tvForgotPassword);
+
         TextView tvGoToSignup = findViewById(R.id.tvSignup);
         tvGoToSignup.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignupActivity.class)));
 
         btnLogin.setOnClickListener(v -> loginUser());
-
+        tvForgotPassword.setOnClickListener(v -> resetPassword());
 
     }
 
@@ -61,26 +62,81 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    private void resetPassword() {
+        String email = etEmail.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            Toast.makeText(this, "Please enter your registered email", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(
+                                LoginActivity.this,
+                                "Password reset email sent. Check your inbox.",
+                                Toast.LENGTH_LONG
+                        ).show();
+                    } else {
+                        Toast.makeText(
+                                LoginActivity.this,
+                                "Error: " + Objects.requireNonNull(task.getException()).getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show();
+                    }
+                });
+    }
+
+
     private void checkUserRole() {
         String uid = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-        db.collection("users").document(uid).get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                String role = documentSnapshot.getString("role");
-                if ("admin".equals(role)) {
-                    Toast.makeText(this, "Login Sucessful as Admin", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, AdminDashboardActivity.class));
-                } else {
-                    Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }
-                finish();
-            } else {
-                // Document missing? Send them to complete their profile (Signup)
-                Toast.makeText(this, "Profile not found. Please register.", Toast.LENGTH_SHORT).show();
-                mAuth.signOut();
-            }
-        }).addOnFailureListener(e -> Toast.makeText(this, "Database Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+
+        db.collection("users")
+                .document(uid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+
+                    if (!documentSnapshot.exists()) {
+                        Toast.makeText(this,
+                                "Profile not found. Please register.",
+                                Toast.LENGTH_SHORT).show();
+                        mAuth.signOut();
+                        return;
+                    }
+
+                    String role = documentSnapshot.getString("role");
+
+                    if ("admin".equals(role) || "super_admin".equals(role)) {
+                        Toast.makeText(this,
+                                "Login successful (" + role + ")",
+                                Toast.LENGTH_SHORT).show();
+
+                        startActivity(
+                                new Intent(LoginActivity.this,
+                                        AdminDashboardActivity.class)
+                        );
+
+                    } else {
+                        Toast.makeText(this,
+                                "Login successful",
+                                Toast.LENGTH_SHORT).show();
+
+                        startActivity(
+                                new Intent(LoginActivity.this,
+                                        MainActivity.class)
+                        );
+                    }
+
+                    finish();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this,
+                                "Database Error: " + e.getMessage(),
+                                Toast.LENGTH_SHORT).show()
+                );
     }
+
 
     @Override
     public void onStart() {

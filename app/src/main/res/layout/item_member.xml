@@ -7,7 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
             android:layout_height="60dp"
             android:src="@drawable/ic_user_placeholder"
             app:civ_border_width="1dp"
-            app:civ_border_color="#FF000000"/>
+            app:civ_border_color="?attr/colorOutline"/>
 
         <!-- Name & Skills -->
         <LinearLayout
@@ -33,6 +34,7 @@
             android:layout_marginStart="16dp"
             android:orientation="vertical">
 
+            <!-- ✅ Name -->
             <TextView
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
@@ -40,18 +42,19 @@
                 android:text="Student Name"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#212121"/>
+                android:textColor="?attr/colorOnSurface"/>
 
+            <!-- ✅ Skills -->
             <TextView
                 android:id="@+id/txtSkills"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Java, Flutter, Kotlin"
                 android:textSize="14sp"
-                android:textColor="#757575"
+                android:textColor="?attr/colorOnSurfaceVariant"
                 android:layout_marginTop="4dp"/>
 
-            <!-- Social Icons Row -->
+            <!-- Social Icons -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,7 +67,8 @@
                     android:layout_height="32dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_github"
-                    android:contentDescription="GitHub"/>
+                    android:contentDescription="GitHub"
+                    />
 
                 <ImageButton
                     android:id="@+id/btnLinkedIn"
@@ -73,7 +77,8 @@
                     android:layout_marginStart="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_linkedin"
-                    android:contentDescription="LinkedIn"/>
+                    android:contentDescription="LinkedIn"
+                     />
 
                 <ImageButton
                     android:id="@+id/btnEmail"
@@ -82,7 +87,8 @@
                     android:layout_marginStart="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_email"
-                    android:contentDescription="Email"/>
+                    android:contentDescription="Email"
+                   />
 
                 <ImageButton
                     android:id="@+id/btnPortfolio"
@@ -91,9 +97,19 @@
                     android:layout_marginStart="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_link"
-                    android:contentDescription="Portfolio"/>
+                    android:contentDescription="Portfolio"
+                     />
 
             </LinearLayout>
+
+            <!-- Admin Button -->
+            <Button
+                android:id="@+id/btnAdminAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Action"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

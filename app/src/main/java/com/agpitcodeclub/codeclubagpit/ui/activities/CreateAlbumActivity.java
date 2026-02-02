@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class CreateAlbumActivity extends AppCompatActivity {
 
@@ -31,7 +32,7 @@ public class CreateAlbumActivity extends AppCompatActivity {
     }
 
     private void createAlbum() {
-        String albumName = etAlbumName.getText().toString().trim();
+        String albumName = Objects.requireNonNull(etAlbumName.getText()).toString().trim();
 
         if (TextUtils.isEmpty(albumName)) {
             etAlbumName.setError("Album name required");

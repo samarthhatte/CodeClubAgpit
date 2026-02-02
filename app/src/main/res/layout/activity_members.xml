@@ -11,16 +11,23 @@
         android:background="?attr/colorPrimary"
         app:tabTextColor="#FFFFFF"
         app:tabSelectedTextColor="#FFEB3B">
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Current" />
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
+            android:text="Students"
             android:layout_height="wrap_content"
-            android:text="Alumni" />
+            android:layout_width="wrap_content" />
+
+        <com.google.android.material.tabs.TabItem
+            android:text="Members"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
+
+        <com.google.android.material.tabs.TabItem
+            android:text="Alumni"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content" />
     </com.google.android.material.tabs.TabLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMembers"
