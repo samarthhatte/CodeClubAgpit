@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Existing colors (keep) -->
     <color name="black">#FF000000</color>
     <color name="purple_500">#6200EE</color>
     <color name="teal_700">#FF018786</color>
+
+    <!-- 🌞 Light mode semantic colors -->
+    <color name="background">#FFFFFF</color>
+    <color name="textPrimary">#000000</color>
+    <color name="cardBg">#F5F5F5</color>
+
 </resources>
