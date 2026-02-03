@@ -1,7 +1,15 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="Base.Theme.CodeClubAgpit" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+    <style name="Base.Theme.CodeClubAgpit"
+        parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Softer & brighter for dark background -->
+        <item name="colorPrimary">#6FA0FF</item>
+        <item name="colorSecondary">#9BB4FF</item>
+
+        <!-- Dark surface -->
+        <item name="colorSurfaceVariant">#1E2238</item>
+
     </style>
+
 </resources>
