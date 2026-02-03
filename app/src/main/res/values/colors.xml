@@ -11,4 +11,10 @@
     <color name="textPrimary">#000000</color>
     <color name="cardBg">#F5F5F5</color>
 
+    <!-- Logo Gradient -->
+    <color name="logoGradientStart">#C9B6FF</color> <!-- purple -->
+    <color name="logoGradientEnd">#4A7DFF</color>   <!-- blue -->
+
+
+
 </resources>

@@ -9,5 +9,9 @@
 
     <style name="CircleImage">
         <item name="cornerSize">50%</item>
+        <item name="colorPrimary">#3576F6</item>
+        <item name="colorSecondary">#405BA2</item>
+        <item name="colorSurfaceVariant">#A7A3F8</item>
+
     </style>
 </resources>
