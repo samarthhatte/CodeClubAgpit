@@ -18,7 +18,7 @@
             android:text="About Code Club AGPIT"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:layout_marginBottom="12dp"/>
 
         <!-- Board of Directors & Faculty -->
@@ -28,7 +28,7 @@
             android:text="AGPIT Board of Directors &amp; Faculty"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="12dp" />
 
