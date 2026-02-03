@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:text="Hello, Member!"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:layout_marginTop="16dp"/>
 
         <TextView
@@ -199,7 +199,7 @@
             android:text="Logout"
             app:icon="@drawable/ic_logout"
             android:layout_marginTop="32dp"
-            android:backgroundTint="#D32F2F"/>
+            android:backgroundTint="?attr/colorError"/>
 
     </LinearLayout>
 </ScrollView>
