@@ -1,5 +1,6 @@
 package com.agpitcodeclub.codeclubagpit.ui.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agpitcodeclub.codeclubagpit.R;
+import com.agpitcodeclub.codeclubagpit.ui.activities.EventDetailActivity;
 import com.agpitcodeclub.codeclubagpit.ui.activities.EventsActivity;
+import com.google.firebase.firestore.DocumentSnapshot;
+
 
 import java.util.List;
 import java.util.Map;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
 
-    private final List<Map<String, Object>> events;
+    private final List<DocumentSnapshot> events;
 
-    public EventAdapter(List<Map<String, Object>> events) {
+    public EventAdapter(List<DocumentSnapshot> events) {
         this.events = events;
     }
+
 
     @NonNull
     @Override
@@ -32,25 +37,22 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Map<String, Object> event = events.get(position);
 
-        holder.tvTitle.setText((String) event.get("title"));
-        holder.tvDate.setText((String) event.get("date"));
+        DocumentSnapshot doc = events.get(position);
 
-        // Handling the click on the Card
+        holder.tvTitle.setText(doc.getString("title"));
+        holder.tvDate.setText(doc.getString("date"));
+
         holder.itemView.setOnClickListener(v -> {
-            android.content.Intent intent = new android.content.Intent(v.getContext(), EventsActivity.class);
-            // Passing the data to the next screen
-            intent.putExtra("title", (String) event.get("title"));
-            intent.putExtra("date", (String) event.get("date"));
-            intent.putExtra("description", (String) event.get("description"));
+            Intent intent = new Intent(v.getContext(), EventDetailActivity.class);
+            intent.putExtra("eventId", doc.getId()); // ⭐ KEY CHANGE
             v.getContext().startActivity(intent);
         });
 
-        // Your existing animation
         holder.itemView.setAlpha(0f);
         holder.itemView.animate().alpha(1f).setDuration(400).start();
     }
+
 
     @Override
     public int getItemCount() {

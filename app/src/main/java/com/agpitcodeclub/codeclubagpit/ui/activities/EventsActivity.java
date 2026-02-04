@@ -24,7 +24,8 @@ public class EventsActivity extends AppCompatActivity {
 
     private RecyclerView rvEvents;
     private FirebaseFirestore db;
-    private final List<Map<String, Object>> eventList = new ArrayList<>();
+    private final List<DocumentSnapshot> eventList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +49,19 @@ public class EventsActivity extends AppCompatActivity {
     }
 
     private void loadEventsFromFirestore() {
-        // Fetching events sorted by newest first
         db.collection("events")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
-                        eventList.add(doc.getData());
-                    }
-                    // Set the adapter (Code for Adapter below)
+                    eventList.clear();
+                    eventList.addAll(queryDocumentSnapshots.getDocuments());
+
                     EventAdapter adapter = new EventAdapter(eventList);
                     rvEvents.setAdapter(adapter);
                 })
-                .addOnFailureListener(e -> Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                );
     }
+
 }

@@ -116,19 +116,21 @@ public class AdminPushActivity extends AppCompatActivity {
                         jsonBody.put("title", "New Event: " + title);
                         jsonBody.put("body", "Check out the details for " + title);
 
-                        // Image is OPTIONAL
                         if (imageUrl != null && !imageUrl.isEmpty()) {
                             jsonBody.put("image", imageUrl);
                         }
 
-                        jsonBody.put("topic", "all_members");
+                        // ⭐ KEY PART
+                        jsonBody.put("type", "event");
+                        jsonBody.put("eventId", eventId);
 
-                        Log.d(TAG, "STEP 7: JSON = " + jsonBody.toString());
+                        jsonBody.put("topic", "all_members");
 
                     } catch (JSONException e) {
                         Log.e(TAG, "JSON creation failed", e);
                         return;
                     }
+
 
                     sendVolleyRequest(url, jsonBody);
                 })
