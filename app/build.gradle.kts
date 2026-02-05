@@ -12,8 +12,12 @@ android {
         applicationId = "com.agpitcodeclub.codeclubagpit"
         minSdk = 24
         targetSdk = 35
-        versionCode = 24
-        versionName = "3.4"
+        versionCode = 28
+        versionName = "3.8"
+        ndkVersion = "28.0.12433510"
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+        }
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -25,6 +29,8 @@ android {
             useLegacyPackaging = false
         }
     }
+
+
 
     buildTypes {
         release {
@@ -43,24 +49,24 @@ android {
 }
 
 dependencies {
-    implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-messaging")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.messaging)
 
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("de.hdodenhof:circleimageview:3.1.0")
-    implementation("com.android.volley:volley:1.2.1")
-    implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
-    implementation("com.github.chrisbanes:PhotoView:2.3.0")
+    implementation(libs.okhttp)
+    implementation(libs.circleimageview)
+    implementation(libs.volley)
+    implementation(libs.photoview)
 
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.glide)
     implementation(libs.ext.junit)
     implementation(libs.monitor)
-    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("junit:junit:4.13.2")
-    implementation("com.cloudinary:cloudinary-android:3.0.2")
-    implementation("com.facebook.soloader:soloader:0.12.1")
+    annotationProcessor(libs.compiler)
+    testImplementation(libs.junit)
+    implementation(libs.viewpager2)
+    androidTestImplementation(libs.junit)
+    implementation(libs.cloudinary.android)
+    implementation(libs.soloader)
 
     implementation(libs.appcompat)
     implementation(libs.material)

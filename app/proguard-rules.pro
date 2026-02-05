@@ -27,3 +27,25 @@
     public *** get*();
     public void set*(***);
 }
+
+# 6. Fix for "Missing Classes" from OkHttp & Cloudinary
+-dontwarn okio.**
+-dontwarn com.squareup.okhttp3.**
+-dontwarn javax.annotation.**
+-dontwarn org.conscrypt.**
+-dontwarn com.cloudinary.android.MediaManager
+
+# 7. SoLoader (Native library loading)
+# Necessary for the 16 KB memory alignment support
+-keep class com.facebook.soloader.** { *; }
+-dontwarn com.facebook.soloader.**
+
+# 8. Volley (if R8 flags it)
+-keep class com.android.volley.** { *; }
+
+# Please add these rules to your existing keep rules in order to suppress warnings.
+# This is generated automatically by the Android Gradle plugin.
+-dontwarn com.squareup.picasso.Callback
+-dontwarn com.squareup.picasso.Picasso$Builder
+-dontwarn com.squareup.picasso.Picasso
+-dontwarn com.squareup.picasso.RequestCreator

@@ -104,13 +104,16 @@ public class ProfileActivity extends AppCompatActivity {
 
 // Load skills
 // Load skills safely
+                        @SuppressWarnings("unchecked")
                         List<String> skills = (List<String>) doc.get("skills");
-                        if (skills != null) {
-                            cgSkills.removeAllViews(); // Clear existing chips to avoid duplicates
-                            for (String skill : skills) {
-                                addSkillChip(skill);
-                            }
+
+                        if (skills == null) skills = new java.util.ArrayList<>();
+
+                        cgSkills.removeAllViews();
+                        for (String skill : skills) {
+                            addSkillChip(skill);
                         }
+
 
 
                         String photoUrl = doc.getString("profilePic");
