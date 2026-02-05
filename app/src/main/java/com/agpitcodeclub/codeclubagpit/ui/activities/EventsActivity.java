@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.core.view.WindowCompat;
 import com.agpitcodeclub.codeclubagpit.ui.adapters.EventAdapter;
 import com.agpitcodeclub.codeclubagpit.R;
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
+import androidx.viewpager2.widget.ViewPager2;
+import android.os.Handler;
+import com.agpitcodeclub.codeclubagpit.ui.adapters.SliderAdapter;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -26,6 +26,8 @@ public class EventsActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private final List<DocumentSnapshot> eventList = new ArrayList<>();
 
+    private Handler sliderHandler;
+    private Runnable sliderRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +36,55 @@ public class EventsActivity extends AppCompatActivity {
         WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
 
-        ImageSlider imageSlider = findViewById(R.id.image_slider);
-        List<SlideModel> slideModels = new ArrayList<>();
+
 
         db = FirebaseFirestore.getInstance();
         rvEvents = findViewById(R.id.rvEvents);
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
 
         // Add images for your Code Club (Use your actual Firebase image URLs here)
-        slideModels.add(new SlideModel("https://codeclubagpit.vercel.app/events/JS1.png", "Android Workshop 2026", ScaleTypes.CENTER_CROP));
-        slideModels.add(new SlideModel("https://lh3.googleusercontent.com/pw/AP1GczM6xtRuWFZkR6UAMmBt6vMRNm-JgXgSkHFrDsWxZd_W39dlIlepltwWF8sqSa6vCaPBpYuv28LcTOyHi4ddHYGjYjMoWaf2bRzOQ41P7vNov-0cxiHyr3LEHEqzUAcffyIlBGRNWVzZah45I15hmIMd=w878-h897-s-no-gm?authuser=0", "AGPIT Hackathon", ScaleTypes.CENTER_CROP));
-        slideModels.add(new SlideModel("https://codeclubagpit.vercel.app/events/launchFY1.png", "Code Club Meetup", ScaleTypes.CENTER_CROP));
-        imageSlider.setImageList(slideModels);
+        ViewPager2 viewPagerSlider = findViewById(R.id.viewPagerSlider);
+
+        List<String> images = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
+
+        images.add("https://codeclubagpit.vercel.app/events/JS1.png");
+        titles.add("Android Workshop 2026");
+
+        images.add("https://lh3.googleusercontent.com/pw/AP1GczM6xtRuWFZkR6UAMmBt6vMRNm-JgXgSkHFrDsWxZd_W39dlIlepltwWF8sqSa6vCaPBpYuv28LcTOyHi4ddHYGjYjMoWaf2bRzOQ41P7vNov-0cxiHyr3LEHEqzUAcffyIlBGRNWVzZah45I15hmIMd=w878-h897-s-no-gm?authuser=0");
+        titles.add("AGPIT Hackathon");
+
+        images.add("https://codeclubagpit.vercel.app/events/launchFY1.png");
+        titles.add("Code Club Meetup");
+
+        SliderAdapter sliderAdapter = new SliderAdapter(images, titles);
+        viewPagerSlider.setAdapter(sliderAdapter);
+
+        sliderHandler = new Handler();
+
+        sliderRunnable = new Runnable() {
+            @Override
+            public void run() {
+                int next = (viewPagerSlider.getCurrentItem() + 1) % images.size();
+                viewPagerSlider.setCurrentItem(next, true);
+                sliderHandler.postDelayed(this, 3000);
+            }
+        };
+
+        sliderHandler.postDelayed(sliderRunnable, 3000);
+
+
 
         loadEventsFromFirestore();
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (sliderHandler != null && sliderRunnable != null) {
+            sliderHandler.removeCallbacks(sliderRunnable);
+        }
+    }
+
 
     private void loadEventsFromFirestore() {
         db.collection("events")
