@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.view.WindowCompat;
 
 import com.agpitcodeclub.codeclubagpit.R;
 import com.agpitcodeclub.codeclubagpit.model.AlbumModel;
@@ -28,6 +29,8 @@ public class AdminGallery extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_gallery);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
+
 
         btnCreateAlbum = findViewById(R.id.btnCreateAlbum);
         rvAdminAlbums = findViewById(R.id.rvAdminAlbums);

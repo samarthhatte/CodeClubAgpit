@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.agpitcodeclub.codeclubagpit.R;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.bumptech.glide.Glide;
+import androidx.core.view.WindowCompat;
 
 public class FullScreenImageActivity extends AppCompatActivity {
 
@@ -23,3 +24,4 @@ public class FullScreenImageActivity extends AppCompatActivity {
                 .into(photoView);
     }
 }
+

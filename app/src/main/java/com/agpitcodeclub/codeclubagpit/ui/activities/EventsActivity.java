@@ -6,7 +6,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.core.view.WindowCompat;
 import com.agpitcodeclub.codeclubagpit.ui.adapters.EventAdapter;
 import com.agpitcodeclub.codeclubagpit.R;
 import com.denzcoskun.imageslider.ImageSlider;
@@ -31,6 +31,8 @@ public class EventsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
+
 
         ImageSlider imageSlider = findViewById(R.id.image_slider);
         List<SlideModel> slideModels = new ArrayList<>();

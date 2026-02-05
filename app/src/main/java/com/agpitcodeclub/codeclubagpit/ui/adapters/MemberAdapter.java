@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.agpitcodeclub.codeclubagpit.ui.activities.FullScreenImageActivity;
+
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,15 +59,42 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
         // 1️⃣ Basic info (everyone sees this)
         holder.nameText.setText(user.getName());
 
-        if (user.getProfilePic() != null && !user.getProfilePic().isEmpty()) {
+        String profileUrl = user.getProfilePic();
+
+// ✅ Load profile image
+        if (profileUrl != null && !profileUrl.isEmpty()) {
+
             Glide.with(holder.itemView.getContext())
-                    .load(user.getProfilePic())
+                    .load(profileUrl)
                     .placeholder(R.drawable.ic_user_placeholder)
                     .circleCrop()
                     .into(holder.imgMember);
+
+            // ✅ Open Full Screen on Click
+            holder.imgMember.setOnClickListener(v -> {
+
+                Intent intent = new Intent(
+                        holder.itemView.getContext(),
+                        FullScreenImageActivity.class
+                );
+
+                intent.putExtra("IMAGE_URL", profileUrl);
+
+                holder.itemView.getContext().startActivity(intent);
+            });
+
         } else {
+
             holder.imgMember.setImageResource(R.drawable.ic_user_placeholder);
+
+            // ❌ No photo available
+            holder.imgMember.setOnClickListener(v ->
+                    Toast.makeText(holder.itemView.getContext(),
+                            "Profile photo not available",
+                            Toast.LENGTH_SHORT).show()
+            );
         }
+
 
         if (user.getSkills() != null) {
             holder.skillsText.setText(String.join(", ", user.getSkills()));

@@ -6,7 +6,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.core.view.WindowCompat;
 import com.agpitcodeclub.codeclubagpit.R;
 import com.agpitcodeclub.codeclubagpit.model.UserModel;
 import com.agpitcodeclub.codeclubagpit.ui.adapters.MemberAdapter;
@@ -39,6 +39,8 @@ public class MembersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_members);
+
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
         // 🔐 Auth safety
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {

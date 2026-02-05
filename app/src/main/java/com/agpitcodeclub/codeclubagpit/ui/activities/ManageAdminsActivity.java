@@ -6,7 +6,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.core.view.WindowCompat;
 import com.agpitcodeclub.codeclubagpit.R;
 import com.agpitcodeclub.codeclubagpit.model.UserModel;
 import com.agpitcodeclub.codeclubagpit.ui.adapters.ManageAdminAdapter;
@@ -30,6 +30,8 @@ public class ManageAdminsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_admins);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
+
 
         String uid = FirebaseAuth.getInstance().getUid();
         if (uid == null) {

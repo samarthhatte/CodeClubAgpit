@@ -12,10 +12,18 @@ android {
         applicationId = "com.agpitcodeclub.codeclubagpit"
         minSdk = 24
         targetSdk = 35
-        versionCode = 21
-        versionName = "3.1"
+        versionCode = 24
+        versionName = "3.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    // ADD THIS SECTION TO SUPPORT 16 KB PAGE SIZES
+    packaging {
+        jniLibs {
+            // This ensures native libraries are extracted and aligned correctly
+            useLegacyPackaging = false
+        }
     }
 
     buildTypes {
@@ -35,32 +43,29 @@ android {
 }
 
 dependencies {
-    implementation("com.google.firebase:firebase-messaging")
     implementation(platform("com.google.firebase:firebase-bom:34.8.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-messaging")
+
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
-    implementation("com.google.firebase:firebase-storage")
     implementation("com.github.chrisbanes:PhotoView:2.3.0")
-    // Glide library for image loading
+
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.ext.junit)
+    implementation(libs.monitor)
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
-    implementation("com.cloudinary:cloudinary-android:2.3.1")
-    implementation("com.facebook.soloader:soloader:0.10.5")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("junit:junit:4.13.2")
+    implementation("com.cloudinary:cloudinary-android:3.0.2")
+    implementation("com.facebook.soloader:soloader:0.12.1")
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-}
-configurations.all {
-    resolutionStrategy {
-        force("com.facebook.soloader:soloader:0.10.5")
-    }
 }
