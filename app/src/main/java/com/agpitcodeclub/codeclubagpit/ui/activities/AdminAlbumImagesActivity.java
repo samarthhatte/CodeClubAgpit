@@ -58,7 +58,7 @@ public class AdminAlbumImagesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_album_images);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
         // 1️⃣ Read albumId FIRST
         albumId = getIntent().getStringExtra("ALBUM_ID");

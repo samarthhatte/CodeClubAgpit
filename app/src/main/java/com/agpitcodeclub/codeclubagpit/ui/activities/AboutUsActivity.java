@@ -23,7 +23,7 @@ public class AboutUsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
         RecyclerView rvFaculty = findViewById(R.id.rvFaculty);
         rvFaculty.setLayoutManager(

@@ -40,7 +40,7 @@ public class MembersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_members);
 
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
         // 🔐 Auth safety
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
