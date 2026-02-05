@@ -3,7 +3,7 @@ package com.agpitcodeclub.codeclubagpit.ui.activities;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.core.view.WindowCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.agpitcodeclub.codeclubagpit.R;
@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 
 
 public class EventDetailActivity extends AppCompatActivity {
@@ -21,6 +22,8 @@ public class EventDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
+
 
         ImageView ivEventBanner = findViewById(R.id.ivEventBanner);
         TextView tvTitle = findViewById(R.id.tvTitle);

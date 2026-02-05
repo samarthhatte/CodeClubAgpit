@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import androidx.core.view.WindowCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.agpitcodeclub.codeclubagpit.R;
@@ -37,6 +37,8 @@ public class AdminPushActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_push);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
+
 
         db = FirebaseFirestore.getInstance();
         spinnerEvents = findViewById(R.id.spinnerEvents);
