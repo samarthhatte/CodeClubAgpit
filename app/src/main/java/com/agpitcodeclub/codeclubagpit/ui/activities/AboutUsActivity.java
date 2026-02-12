@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.activity.EdgeToEdge;
 import androidx.core.view.WindowCompat;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +25,7 @@ public class AboutUsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
+        EdgeToEdge.enable(this);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
         RecyclerView rvFaculty = findViewById(R.id.rvFaculty);

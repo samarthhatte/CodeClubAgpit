@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.agpitcodeclub.codeclubagpit.R;
@@ -23,6 +24,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        EdgeToEdge.enable(this);
 
         LinearLayout logoLayout = findViewById(R.id.logoLayout);
         LinearLayout dedicationLayout = findViewById(R.id.dedicationLayout);

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.agpitcodeclub.codeclubagpit.R;
@@ -24,6 +25,7 @@ public class CreateAlbumActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_album);
+        EdgeToEdge.enable(this);
 
         etAlbumName = findViewById(R.id.etAlbumName);
         btnSaveAlbum = findViewById(R.id.btnSaveAlbum);

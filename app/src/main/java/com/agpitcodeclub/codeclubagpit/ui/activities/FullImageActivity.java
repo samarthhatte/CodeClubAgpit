@@ -2,6 +2,8 @@ package com.agpitcodeclub.codeclubagpit.ui.activities;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+
+import androidx.activity.EdgeToEdge;
 import androidx.core.view.WindowCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +16,7 @@ public class FullImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_image);
+        EdgeToEdge.enable(this);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
 

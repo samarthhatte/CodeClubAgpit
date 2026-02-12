@@ -3,6 +3,7 @@ package com.agpitcodeclub.codeclubagpit.ui.activities;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,7 @@ public class EventsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
+        EdgeToEdge.enable(this);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
 
