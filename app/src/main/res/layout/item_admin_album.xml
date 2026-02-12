@@ -18,7 +18,7 @@
             android:id="@+id/imgAlbum"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:contentDescription="TODO"
+            android:contentDescription="Image Preview"
             android:scaleType="centerCrop"
             android:src="@android:drawable/ic_menu_gallery" />
 
@@ -35,7 +35,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:contentDescription="TODO"
+            android:contentDescription="Arrow "
             android:src="@drawable/ic_arrow_right" />
     </LinearLayout>
 

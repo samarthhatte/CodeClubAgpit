@@ -42,9 +42,14 @@ public class AdminAlbumAdapter
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         AlbumModel album = list.get(position);
+
         holder.tvAlbumName.setText(album.getAlbumName());
 
-        // 🔥 ALWAYS derive cover from images (admin side)
+        // ✅ Reset placeholder first
+        holder.imgAlbum.setImageResource(R.drawable.ic_gallery_placeholder);
+
+        if (album.getId() == null) return;
+
         FirebaseFirestore.getInstance()
                 .collection("gallery")
                 .document(album.getId())
@@ -54,33 +59,34 @@ public class AdminAlbumAdapter
                 .get()
                 .addOnSuccessListener(query -> {
 
-                    if (!query.isEmpty()) {
-                        String firstImage =
-                                query.getDocuments()
-                                        .get(0)
-                                        .getString("imageUrl");
+                    if (query == null || query.isEmpty()) return;
 
-                        Glide.with(context)
-                                .load(firstImage)
-                                .placeholder(R.drawable.ic_gallery_placeholder)
-                                .error(R.drawable.ic_gallery_placeholder)
-                                .centerCrop()
-                                .into(holder.imgAlbum);
-                    } else {
-                        holder.imgAlbum.setImageResource(
-                                R.drawable.ic_gallery_placeholder
-                        );
-                    }
-                });
+                    String firstImage =
+                            query.getDocuments().get(0).getString("imageUrl");
+
+                    if (firstImage == null || firstImage.trim().isEmpty()) return;
+
+                    Glide.with(holder.itemView.getContext())
+                            .load(firstImage)
+                            .placeholder(R.drawable.ic_gallery_placeholder)
+                            .error(R.drawable.ic_gallery_placeholder)
+                            .centerCrop()
+                            .into(holder.imgAlbum);
+                })
+                .addOnFailureListener(e ->
+                        holder.imgAlbum.setImageResource(R.drawable.ic_gallery_placeholder)
+                );
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent =
-                    new Intent(context, AdminAlbumImagesActivity.class);
+
+            Intent intent = new Intent(context, AdminAlbumImagesActivity.class);
             intent.putExtra("ALBUM_ID", album.getId());
             intent.putExtra("ALBUM_NAME", album.getAlbumName());
+
             context.startActivity(intent);
         });
     }
+
 
     @Override
     public int getItemCount() {

@@ -11,6 +11,7 @@
         android:id="@+id/imgAlbum"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="Image in Album"
         android:scaleType="centerCrop"
         android:src="@android:drawable/ic_menu_gallery" />
 
