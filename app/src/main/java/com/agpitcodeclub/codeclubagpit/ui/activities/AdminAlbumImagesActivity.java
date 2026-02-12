@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import java.util.Map;
+
+import androidx.activity.EdgeToEdge;
 import androidx.core.view.WindowCompat;
 
 import com.agpitcodeclub.codeclubagpit.ui.adapters.AdminAlbumImageAdapter;
@@ -58,6 +60,7 @@ public class AdminAlbumImagesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_album_images);
+        EdgeToEdge.enable(this);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
         // 1️⃣ Read albumId FIRST

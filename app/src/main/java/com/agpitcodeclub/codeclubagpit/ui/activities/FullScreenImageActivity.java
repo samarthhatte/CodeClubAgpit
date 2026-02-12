@@ -1,6 +1,8 @@
 package com.agpitcodeclub.codeclubagpit.ui.activities;
 
 import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.agpitcodeclub.codeclubagpit.R;
@@ -14,6 +16,7 @@ public class FullScreenImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen_image);
+        EdgeToEdge.enable(this);
 
         PhotoView photoView = findViewById(R.id.photoView);
 

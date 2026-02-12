@@ -56,6 +56,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_chat);
+        EdgeToEdge.enable(this);
 
         // ✅ Bind UI Views FIRST
         userName = findViewById(R.id.userName);
@@ -114,29 +115,22 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendMessage(String text) {
 
-        // Message Data
         Map<String, Object> message = new HashMap<>();
         message.put("senderId", senderUid);
         message.put("receiverId", receiverUid);
         message.put("text", text);
+
+        // ✅ Server timestamp (real)
         message.put("timestamp", FieldValue.serverTimestamp());
+
+        // ✅ Local time (instant ordering)
+        message.put("localTime", System.currentTimeMillis());
 
         db.collection("chats")
                 .document(chatId)
                 .collection("messages")
-                .add(message)
-                .addOnSuccessListener(doc -> {
-                    Log.d("CHAT_DEBUG", "Message Saved ✅ " + doc.getId());
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this,
-                            "Message Failed ❌ " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();
-                    Log.e("CHAT_DEBUG", "Error: ", e);
-                });
+                .add(message);
 
-
-        // ✅ Update last message in chat room
         db.collection("chats")
                 .document(chatId)
                 .update(
@@ -147,12 +141,13 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+
     private void loadMessages() {
 
         db.collection("chats")
                 .document(chatId)
                 .collection("messages")
-                .orderBy("timestamp", Query.Direction.ASCENDING)
+                .orderBy("localTime", Query.Direction.ASCENDING)
                 .addSnapshotListener((snapshots, error) -> {
 
                     if (error != null || snapshots == null) return;
@@ -175,6 +170,7 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
 
     private void createChatRoom() {
