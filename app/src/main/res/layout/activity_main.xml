@@ -15,7 +15,7 @@
             android:id="@+id/tvWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello, Member!"
+            android:text="@string/hello_member"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="?attr/colorOnSurface"
@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome to AGPIT Code Club"
+            android:text="@string/welcome_to_agpit_code_club"
             android:textSize="14sp"
             android:layout_marginBottom="24dp"/>
 
@@ -55,11 +55,12 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:contentDescription="TODO"
+                        android:contentDescription="@string/members"
                         android:src="@drawable/ic_people" />
 
                     <TextView
-                        android:text="Members"
+                        android:text="@string/members"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
@@ -86,11 +87,12 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:contentDescription="TODO"
+                        android:contentDescription="@string/events"
                         android:src="@drawable/ic_notification" />
 
                     <TextView
-                        android:text="Events"
+                        android:text="@string/events"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
@@ -117,11 +119,11 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:contentDescription="TODO"
+                        android:contentDescription="@string/about_us"
                         android:src="@drawable/ic_info" />
 
                     <TextView
-                        android:text="About Us"
+                        android:text="@string/about_us"
                         android:textStyle="bold"
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
@@ -148,11 +150,11 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:contentDescription="TODO"
+                        android:contentDescription="@string/profile"
                         android:src="@android:drawable/ic_menu_edit" />
 
                     <TextView
-                        android:text="My Profile"
+                        android:text="@string/my_profile"
                         android:textStyle="bold"
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
@@ -179,10 +181,11 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:contentDescription="@string/gallery"
                         android:src="@drawable/ic_gallery" />
 
                     <TextView
-                        android:text="Gallery"
+                        android:text="@string/gallery"
                         android:textStyle="bold"
                         android:layout_marginTop="8dp"
                         android:layout_width="wrap_content"
@@ -196,7 +199,7 @@
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Logout"
+            android:text="@string/logout"
             app:icon="@drawable/ic_logout"
             android:layout_marginTop="32dp"
             android:backgroundTint="?attr/colorError"/>

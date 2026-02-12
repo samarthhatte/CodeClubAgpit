@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat;
 import com.agpitcodeclub.codeclubagpit.R;
 import com.agpitcodeclub.codeclubagpit.ui.activities.EventDetailActivity;
 import com.agpitcodeclub.codeclubagpit.ui.activities.EventsActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -139,6 +141,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         manager.notify((int) System.currentTimeMillis(), builder.build());
     }
+
+    @Override
+    public void onNewToken(@NonNull String token) {
+        super.onNewToken(token);
+
+        Log.d("FCM_DEBUG", "New Token: " + token);
+
+        // TODO: Save token to Firestore
+        FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .update("fcmToken", token);
+    }
+
 
     // Download image
     private Bitmap getBitmapFromUrl(String imageUrl) {

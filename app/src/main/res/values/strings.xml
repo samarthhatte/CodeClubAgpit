@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">CodeClubAgpit</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="pen_icon">Pen Icon</string>
+    <string name="portfolio_website">Portfolio Website</string>
+        <string name="default_member_name">Member Name</string>
+        <string name="hint_type_message">Type message…</string>
+        <string name="desc_send_button">Send message</string>
+    <string name="email_address">Email Address</string>
+    <string name="linkedin_profile">LinkedIn Profile</string>
+    <string name="android_developer">Android Developer</string>
+    <string name="student_name">Student Name</string>
+    <string name="technical_skills">Technical Skills</string>
+    <string name="add_new_skill">Add New Skill</string>
+    <string name="github_profile">GitHub Profile</string>
+    <string name="hello_member">Hello, Member!</string>
+    <string name="about_us">About US</string>
+    <string name="profile">Profile</string>
+    <string name="my_profile">My Profile</string>
+    <string name="gallery">Gallery</string>
+    <string name="logout">Logout</string>
+    <string name="welcome_to_agpit_code_club">Welcome to AGPIT Code Club</string>
+    <string name="members">Members</string>
+    <string name="events">Events</string>
 </resources>

@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.agpitcodeclub.codeclubagpit.ui.activities.ChatActivity;
 import com.agpitcodeclub.codeclubagpit.ui.activities.FullScreenImageActivity;
 
 
@@ -94,6 +96,20 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
                             Toast.LENGTH_SHORT).show()
             );
         }
+
+        holder.itemView.setOnClickListener(v -> {
+
+            Intent intent = new Intent(
+                    holder.itemView.getContext(),
+                    ChatActivity.class
+            );
+
+            intent.putExtra("uid", user.getId());   // Receiver UID
+            intent.putExtra("name", user.getName()); // Receiver Name
+
+            holder.itemView.getContext().startActivity(intent);
+        });
+
 
 
         if (user.getSkills() != null) {

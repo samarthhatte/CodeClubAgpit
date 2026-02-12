@@ -59,7 +59,11 @@ public class ProfileActivity extends AppCompatActivity {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        currentUserId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+        if (mAuth.getCurrentUser() == null) {
+            finish();
+            return;
+        }
+        currentUserId = mAuth.getCurrentUser().getUid();
 
         ivProfilePic = findViewById(R.id.ivProfilePic);
         tvUserName = findViewById(R.id.tvUserName);
@@ -117,9 +121,23 @@ public class ProfileActivity extends AppCompatActivity {
 
 
                         String photoUrl = doc.getString("profilePic");
-                        if (photoUrl != null && !photoUrl.isEmpty()) {
-                            Glide.with(this).load(photoUrl).circleCrop().into(ivProfilePic);
+
+                        if (photoUrl != null && !photoUrl.trim().isEmpty()) {
+
+                            // ✅ Prevent crash if activity is closed
+                            if (isFinishing() || isDestroyed()) return;
+
+                            Glide.with(ProfileActivity.this)
+                                    .load(photoUrl)
+                                    .placeholder(R.drawable.ic_user_placeholder)
+                                    .error(R.drawable.ic_user_placeholder)
+                                    .circleCrop()
+                                    .into(ivProfilePic);
+
+                        } else {
+                            ivProfilePic.setImageResource(R.drawable.ic_user_placeholder);
                         }
+
 
                         // ... skills logic
                     } else {
@@ -164,17 +182,21 @@ public class ProfileActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(String requestId, Map resultData) {
-                        String imageUrl = (String) resultData.get("secure_url");
-                        Log.d("CLOUDINARY", "Upload success: " + imageUrl);
 
-                        // Save URL to Firestore
-                        FirebaseFirestore.getInstance()
-                                .collection("users")
+                        String imageUrl = (String) resultData.get("secure_url");
+
+                        if (imageUrl == null || imageUrl.trim().isEmpty()) return;
+
+                        if (isFinishing() || isDestroyed()) return;
+
+                        db.collection("users")
                                 .document(currentUserId)
                                 .update("profilePic", imageUrl);
 
                         Glide.with(ProfileActivity.this)
                                 .load(imageUrl)
+                                .placeholder(R.drawable.ic_user_placeholder)
+                                .error(R.drawable.ic_user_placeholder)
                                 .circleCrop()
                                 .into(ivProfilePic);
 
@@ -182,6 +204,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 "Profile picture updated",
                                 Toast.LENGTH_SHORT).show();
                     }
+
 
                     @Override
                     public void onError(String requestId, ErrorInfo error) {
