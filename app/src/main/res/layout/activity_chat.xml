@@ -4,17 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="#F5F5F5">
-    <TextView
-    android:id="@+id/userName"
-    android:text="@string/default_member_name"
-    android:textSize="18sp"
-    android:textStyle="bold"
-    android:padding="16dp"
-    android:background="#FFFFFF"
-    android:elevation="4dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+    android:background="@color/cardBg">
+
+
+    <LinearLayout
+        android:id="@+id/chatHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="@color/background"
+        android:elevation="4dp">
+
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_back"
+            app:tint="@color/textPrimary"
+            android:background="?attr/selectableItemBackgroundBorderless" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profileImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_user_placeholder"
+            app:shapeAppearanceOverlay="@style/CircleImage"
+            android:layout_marginEnd="12dp" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/default_member_name"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecycler"
@@ -29,38 +60,36 @@
         android:layout_height="wrap_content"
         app:cardElevation="8dp"
         app:cardCornerRadius="0dp"
-        app:cardBackgroundColor="#FFFFFF">
+        app:cardBackgroundColor="@color/background"> <LinearLayout
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/messageBox"
+            android:hint="@string/hint_type_message"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:background="@android:color/transparent"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:textColor="@color/textPrimary"
+            android:textColorHint="#888888"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="4"
+            android:importantForAccessibility="yes"/>
 
-            <EditText
-                android:id="@+id/messageBox"
-                android:hint="@string/hint_type_message"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:background="@android:color/transparent"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:inputType="textCapSentences|textMultiLine"
-                android:maxLines="4"
-                android:importantForAccessibility="yes"/>
-
-            <ImageButton
-                android:id="@+id/sendBtn"
-                android:src="@android:drawable/ic_menu_send"
-                android:contentDescription="@string/desc_send_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="@color/design_default_color_primary"/>
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/sendBtn"
+            android:src="@android:drawable/ic_menu_send"
+            android:contentDescription="@string/desc_send_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/purple_500"/> </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </LinearLayout>

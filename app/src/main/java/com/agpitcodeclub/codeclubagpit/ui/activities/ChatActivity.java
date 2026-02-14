@@ -19,6 +19,8 @@ import android.util.Log;
 import com.agpitcodeclub.codeclubagpit.R;
 import com.agpitcodeclub.codeclubagpit.model.MessageModel;
 import com.agpitcodeclub.codeclubagpit.ui.adapters.ChatAdapter;
+import com.bumptech.glide.Glide;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -39,6 +41,9 @@ public class ChatActivity extends AppCompatActivity {
     EditText messageBox;
     ImageView sendBtn;
     RecyclerView chatRecycler;
+    ImageView backBtn;
+    ShapeableImageView profileImage;
+    String receiverProfilePic;
 
 
     FirebaseFirestore db;
@@ -54,55 +59,65 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_chat);
         EdgeToEdge.enable(this);
 
-        // ✅ Bind UI Views FIRST
+        // 1. Bind UI Views
         userName = findViewById(R.id.userName);
         messageBox = findViewById(R.id.messageBox);
         sendBtn = findViewById(R.id.sendBtn);
         chatRecycler = findViewById(R.id.chatRecycler);
+        backBtn = findViewById(R.id.backBtn);
+        profileImage = findViewById(R.id.profileImage);
 
-        // ✅ Firebase init
+        // 2. Firebase init
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
-
-        // ✅ Sender UID
         senderUid = auth.getCurrentUser().getUid();
 
-        // ✅ Receiver Data
+        // 3. Retrieve Data from Intent (CRITICAL: Do this before using the variables)
         receiverUid = getIntent().getStringExtra("uid");
         receiverName = getIntent().getStringExtra("name");
+        receiverProfilePic = getIntent().getStringExtra("profilePic");
 
+        // 4. Setup Header UI
         userName.setText(receiverName);
 
-        // ✅ Chat ID
-        chatId = getChatId(senderUid, receiverUid);
+        // Load Profile Image using Glide
+        if (receiverProfilePic != null && !receiverProfilePic.isEmpty()) {
+            Glide.with(this)
+                    .load(receiverProfilePic)
+                    .placeholder(R.drawable.ic_user_placeholder)
+                    .error(R.drawable.ic_user_placeholder)
+                    .into(profileImage);
+        } else {
+            profileImage.setImageResource(R.drawable.ic_user_placeholder);
+        }
 
+        backBtn.setOnClickListener(v -> finish());
+
+        // 5. Chat & RecyclerView Logic
+        chatId = getChatId(senderUid, receiverUid);
         createChatRoom();
 
-        // ✅ RecyclerView Setup
         messageList = new ArrayList<>();
         chatAdapter = new ChatAdapter(this, messageList, senderUid);
 
         LinearLayoutManager lm = new LinearLayoutManager(this);
         lm.setStackFromEnd(true);
-
         chatRecycler.setLayoutManager(lm);
         chatRecycler.setAdapter(chatAdapter);
 
-        // ✅ Send Button
+        // 6. Send Button
         sendBtn.setOnClickListener(v -> {
             String msg = messageBox.getText().toString().trim();
-
             if (!msg.isEmpty()) {
                 sendMessage(msg);
                 messageBox.setText("");
             }
         });
 
-        // ✅ Load Messages
+        // 7. Load Messages
         loadMessages();
     }
 
@@ -143,30 +158,33 @@ public class ChatActivity extends AppCompatActivity {
 
 
     private void loadMessages() {
-
         db.collection("chats")
                 .document(chatId)
                 .collection("messages")
                 .orderBy("localTime", Query.Direction.ASCENDING)
                 .addSnapshotListener((snapshots, error) -> {
-
-                    if (error != null || snapshots == null) return;
-
-                    messageList.clear();
-
-                    for (DocumentSnapshot doc : snapshots.getDocuments()) {
-
-                        MessageModel msg = doc.toObject(MessageModel.class);
-
-                        if (msg != null) {
-                            messageList.add(msg);
-                        }
+                    if (error != null) {
+                        Log.e("ChatActivity", "Listen failed.", error);
+                        return;
                     }
 
-                    chatAdapter.notifyDataSetChanged();
-
-                    if (!messageList.isEmpty()) {
-                        chatRecycler.scrollToPosition(messageList.size() - 1);
+                    if (snapshots != null) {
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    MessageModel msg = dc.getDocument().toObject(MessageModel.class);
+                                    messageList.add(msg);
+                                    chatAdapter.notifyItemInserted(messageList.size() - 1);
+                                    chatRecycler.scrollToPosition(messageList.size() - 1);
+                                    break;
+                                case MODIFIED:
+                                    // Handle edited messages if needed
+                                    break;
+                                case REMOVED:
+                                    // Handle deleted messages if needed
+                                    break;
+                            }
+                        }
                     }
                 });
     }
