@@ -106,7 +106,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
 
             intent.putExtra("uid", user.getId());   // Receiver UID
             intent.putExtra("name", user.getName()); // Receiver Name
-
+            intent.putExtra("profilePic", user.getProfilePic());
             holder.itemView.getContext().startActivity(intent);
         });
 
