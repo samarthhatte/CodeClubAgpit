@@ -1,5 +1,6 @@
 package com.agpitcodeclub.codeclubagpit.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -89,9 +90,20 @@ public class ChatActivity extends AppCompatActivity {
                     .load(receiverProfilePic)
                     .placeholder(R.drawable.ic_user_placeholder)
                     .error(R.drawable.ic_user_placeholder)
+                    .circleCrop() // Consistent with MemberAdapter
                     .into(profileImage);
+
+            // ✅ Add Click Listener for Full Screen Preview
+            profileImage.setOnClickListener(v -> {
+                Intent intent = new Intent(this, FullScreenImageActivity.class);
+                intent.putExtra("IMAGE_URL", receiverProfilePic);
+                startActivity(intent);
+            });
         } else {
             profileImage.setImageResource(R.drawable.ic_user_placeholder);
+            // Optional: Show a toast if no image exists
+            profileImage.setOnClickListener(v ->
+                    Toast.makeText(this, "Profile photo not available", Toast.LENGTH_SHORT).show());
         }
 
         backBtn.setOnClickListener(v -> finish());
