@@ -12,8 +12,8 @@ android {
         applicationId = "com.agpitcodeclub.codeclubagpit"
         minSdk = 24
         targetSdk = 35
-        versionCode = 31
-        versionName = "4.1"
+        versionCode = 33
+        versionName = "4.3"
         ndkVersion = "28.0.12433510"
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a")
