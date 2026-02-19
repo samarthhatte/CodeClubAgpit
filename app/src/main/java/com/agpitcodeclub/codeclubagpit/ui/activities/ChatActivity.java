@@ -61,9 +61,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        EdgeToEdge.enable(this);
 
-        // 1. Bind UI Views
+        // Bind Views
         userName = findViewById(R.id.userName);
         messageBox = findViewById(R.id.messageBox);
         sendBtn = findViewById(R.id.sendBtn);
@@ -71,56 +70,41 @@ public class ChatActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.backBtn);
         profileImage = findViewById(R.id.profileImage);
 
-        // 2. Firebase init
+        // Firebase Init
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         senderUid = auth.getCurrentUser().getUid();
 
-        // 3. Retrieve Data from Intent (CRITICAL: Do this before using the variables)
-        receiverUid = getIntent().getStringExtra("uid");
-        receiverName = getIntent().getStringExtra("name");
-        receiverProfilePic = getIntent().getStringExtra("profilePic");
-
-        // 4. Setup Header UI
-        userName.setText(receiverName);
-
-        // Load Profile Image using Glide
-        if (receiverProfilePic != null && !receiverProfilePic.isEmpty()) {
-            Glide.with(this)
-                    .load(receiverProfilePic)
-                    .placeholder(R.drawable.ic_user_placeholder)
-                    .error(R.drawable.ic_user_placeholder)
-                    .circleCrop() // Consistent with MemberAdapter
-                    .into(profileImage);
-
-            // ✅ Add Click Listener for Full Screen Preview
-            profileImage.setOnClickListener(v -> {
-                Intent intent = new Intent(this, FullScreenImageActivity.class);
-                intent.putExtra("IMAGE_URL", receiverProfilePic);
-                startActivity(intent);
-            });
-        } else {
-            profileImage.setImageResource(R.drawable.ic_user_placeholder);
-            // Optional: Show a toast if no image exists
-            profileImage.setOnClickListener(v ->
-                    Toast.makeText(this, "Profile photo not available", Toast.LENGTH_SHORT).show());
-        }
-
+        // Back Button
         backBtn.setOnClickListener(v -> finish());
 
-        // 5. Chat & RecyclerView Logic
-        chatId = getChatId(senderUid, receiverUid);
-        createChatRoom();
+        // ✅ Notification Open Case
+        String notificationChatId = getIntent().getStringExtra("chatId");
 
-        messageList = new ArrayList<>();
-        chatAdapter = new ChatAdapter(this, messageList, senderUid);
+        if (notificationChatId != null) {
 
-        LinearLayoutManager lm = new LinearLayoutManager(this);
-        lm.setStackFromEnd(true);
-        chatRecycler.setLayoutManager(lm);
-        chatRecycler.setAdapter(chatAdapter);
+            chatId = notificationChatId;
 
-        // 6. Send Button
+            String[] parts = chatId.split("_");
+
+            receiverUid = parts[0].equals(senderUid) ? parts[1] : parts[0];
+
+            loadReceiverDetails(receiverUid);
+
+        }
+        // ✅ Normal Open Case
+        else {
+
+            receiverUid = getIntent().getStringExtra("uid");
+            receiverName = getIntent().getStringExtra("name");
+            receiverProfilePic = getIntent().getStringExtra("profilePic");
+
+            chatId = getChatId(senderUid, receiverUid);
+
+            setupChatUI();
+        }
+
+        // Send Button
         sendBtn.setOnClickListener(v -> {
             String msg = messageBox.getText().toString().trim();
             if (!msg.isEmpty()) {
@@ -128,10 +112,8 @@ public class ChatActivity extends AppCompatActivity {
                 messageBox.setText("");
             }
         });
-
-        // 7. Load Messages
-        loadMessages();
     }
+
 
     // Generate chatId
     private String getChatId(String uid1, String uid2) {
@@ -139,6 +121,60 @@ public class ChatActivity extends AppCompatActivity {
                 ? uid1 + "_" + uid2
                 : uid2 + "_" + uid1;
     }
+
+    private void loadReceiverDetails(String receiverUid) {
+
+        db.collection("users")
+                .document(receiverUid)
+                .get()
+                .addOnSuccessListener(doc -> {
+
+                    if (doc.exists()) {
+
+                        receiverName = doc.getString("name");
+                        receiverProfilePic = doc.getString("profilePic");
+
+                        setupChatUI(); // Continue after loading
+
+                    }
+                });
+    }
+
+
+    private void setupChatUI() {
+
+        userName.setText(receiverName);
+
+        // Profile Image
+        if (receiverProfilePic != null && !receiverProfilePic.isEmpty()) {
+
+            Glide.with(this)
+                    .load(receiverProfilePic)
+                    .placeholder(R.drawable.ic_user_placeholder)
+                    .circleCrop()
+                    .into(profileImage);
+
+        } else {
+            profileImage.setImageResource(R.drawable.ic_user_placeholder);
+        }
+
+        // Create Chat Room
+        createChatRoom();
+
+        // Recycler Setup
+        messageList = new ArrayList<>();
+        chatAdapter = new ChatAdapter(this, messageList, senderUid);
+
+        LinearLayoutManager lm = new LinearLayoutManager(this);
+        lm.setStackFromEnd(true);
+
+        chatRecycler.setLayoutManager(lm);
+        chatRecycler.setAdapter(chatAdapter);
+
+        // Load Messages
+        loadMessages();
+    }
+
 
     private void sendMessage(String text) {
 

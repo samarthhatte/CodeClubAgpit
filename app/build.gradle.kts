@@ -12,8 +12,14 @@ android {
         applicationId = "com.agpitcodeclub.codeclubagpit"
         minSdk = 24
         targetSdk = 35
-        versionCode = 33
-        versionName = "4.3"
+        // ✅ Add this to enable 16kb alignment during compilation
+        externalNativeBuild {
+            cmake {
+                arguments += "-DANDROID_ALIGNED_16KB=ON"
+            }
+        }
+        versionCode = 35
+        versionName = "4.5"
         ndkVersion = "28.0.12433510"
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a")
@@ -26,6 +32,13 @@ android {
     packaging {
         jniLibs {
             // This ensures native libraries are extracted and aligned correctly
+            useLegacyPackaging = false
+        }
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+        // ✅ Ensures native libs are aligned to 16kb boundaries
+        dex {
             useLegacyPackaging = false
         }
     }

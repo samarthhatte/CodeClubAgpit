@@ -68,6 +68,23 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("FCM_DEBUG", msg);
                 });
 
+        FirebaseMessaging.getInstance().getToken()
+                .addOnSuccessListener(token -> {
+                    Log.d("LATEST_FCM_TOKEN", token);
+
+                    // Optional: Save latest token to Firestore
+                    String uid = FirebaseAuth.getInstance().getUid();
+                    if(uid != null){
+                        FirebaseFirestore.getInstance()
+                                .collection("users")
+                                .document(uid)
+                                .update("fcmToken", token);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FCM_DEBUG", "Token fetch failed", e);
+                });
+
         // Cards
         MaterialCardView cardMembers = findViewById(R.id.cardMembers);
         MaterialCardView cardEvents = findViewById(R.id.cardEvents);

@@ -21,15 +21,21 @@
         android:theme="@style/Base.Theme.CodeClubAgpit"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.ChatActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:name=".ui.activities.CommunityPage"
             android:exported="false" />
+        <activity
+            android:name=".ui.activities.ChatActivity"
+            android:exported="true"
+            android:windowLayoutInDisplayCutoutMode="shortEdges"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activities.EventDetailActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowLayoutInDisplayCutoutMode="shortEdges">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,61 +44,76 @@
         </activity>
         <activity
             android:name=".ui.activities.ManageAdminsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.AlbumImagesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.GalleryActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.FullScreenImageActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.FullImageActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.AdminAlbumImagesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.adapters.AdminAlbumAdapter"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.CreateAlbumActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.AdminGallery"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.AboutUsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.ProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.EventsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.AdminPushActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.SignupActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.MainActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.MembersActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.AddEventActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.AdminDashboardActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
         <activity
             android:name=".ui.activities.LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowLayoutInDisplayCutoutMode="shortEdges" />
 
         <service
             android:name=".firebase.MyFirebaseMessagingService"
