@@ -22,4 +22,7 @@
     <string name="welcome_to_agpit_code_club">Welcome to AGPIT Code Club</string>
     <string name="members">Members</string>
     <string name="events">Events</string>
+    <string name="text">Upcoming Events</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

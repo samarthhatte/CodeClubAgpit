@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="@color/black"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,6 @@
         android:padding="16dp"
         android:gravity="center_horizontal">
 
-        <!-- Profile Image -->
         <RelativeLayout
             android:layout_width="140dp"
             android:layout_height="140dp"
@@ -23,13 +23,12 @@
                 android:id="@+id/ivProfilePic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/profile_image"
                 android:src="@drawable/ic_user_placeholder"
                 android:scaleType="centerCrop"
                 android:padding="4dp"
-                app:strokeColor="@color/teal_700"
+                app:strokeColor="@color/text_secondary"
                 app:strokeWidth="3dp"
-                app:shapeAppearanceOverlay="@style/CircleImage"/>
+                app:shapeAppearanceOverlay="@style/CircleImageView"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnEditPic"
@@ -37,38 +36,37 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
-                android:contentDescription="@string/pen_icon"
                 app:fabSize="mini"
                 app:srcCompat="@drawable/baseline_edit_24"
-                app:backgroundTint="@color/teal_700"
-                app:tint="@android:color/white"/>
+                app:backgroundTint="@color/text_secondary"
+                app:tint="@color/black"/>
         </RelativeLayout>
 
-        <!-- Name -->
         <TextView
             android:id="@+id/tvUserName"
-            android:text="@string/student_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student Name"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#212121"
-            android:layout_marginTop="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/white"
+            android:layout_marginTop="16dp"/>
 
         <TextView
-            android:text="@string/android_developer"
-            android:textSize="16sp"
-            android:textColor="#757575"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Android Developer"
+            android:textSize="16sp"
+            android:textColor="@color/text_secondary"/>
 
-        <!-- ===== Technical Skills (UNCHANGED) ===== -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            app:cardBackgroundColor="#111111"
             app:cardCornerRadius="12dp"
-            app:cardElevation="2dp">
+            app:strokeColor="#22FFFFFF"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -79,12 +77,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/technical_skills"
+                    android:text="Technical Skills"
                     android:textAllCaps="true"
                     android:textStyle="bold"
-                    android:textColor="@color/teal_700"
+                    android:textColor="@color/text_secondary"
                     android:textSize="14sp"/>
-
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/cgSkills"
@@ -98,19 +95,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:text="@string/add_new_skill"
+                    android:text="Add New Skill"
+                    android:textColor="@color/text_secondary"
+                    app:iconTint="@color/text_secondary"
                     app:icon="@drawable/baseline_edit_24"/>
-
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- ===== Social & Contact Info (NEW) ===== -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="32dp"
+            app:cardBackgroundColor="#111111"
             app:cardCornerRadius="12dp"
-            app:cardElevation="2dp">
+            app:strokeColor="#22FFFFFF"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -118,103 +118,92 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- GitHub -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/etGithub"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/github_profile"
+                        android:hint="GitHub Profile"
+                        android:textColor="@color/white"
+                        android:textColorHint="#66FFFFFF"
                         android:enabled="false"
-                        android:inputType="textUri"
-                        android:paddingEnd="40dp"/>
-
+                        android:paddingEnd="40dp"
+                        android:backgroundTint="@color/text_secondary"/>
                     <ImageButton
                         android:id="@+id/btnEditGithub"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:background="@null"
-                        android:contentDescription="@string/pen_icon"
-                        android:src="@drawable/baseline_edit_24"/>
+                        android:src="@drawable/baseline_edit_24"
+                        app:tint="@color/text_secondary"/>
                 </RelativeLayout>
 
-                <!-- LinkedIn -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
-
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp">
                     <EditText
                         android:id="@+id/etLinkedIn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/linkedin_profile"
+                        android:hint="LinkedIn Profile"
+                        android:textColor="@color/white"
+                        android:textColorHint="#66FFFFFF"
                         android:enabled="false"
-                        android:inputType="textUri"
-                        android:paddingEnd="40dp"/>
-
+                        android:paddingEnd="40dp"
+                        android:backgroundTint="@color/text_secondary"/>
                     <ImageButton
                         android:id="@+id/btnEditLinkedIn"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:background="@null"
-                        android:contentDescription="@string/pen_icon"
-                        android:src="@drawable/baseline_edit_24"/>
+                        android:src="@drawable/baseline_edit_24"
+                        app:tint="@color/text_secondary"/>
                 </RelativeLayout>
 
-                <!-- Email -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
-
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp">
                     <EditText
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/email_address"
+                        android:hint="Email Address"
+                        android:textColor="@color/white"
+                        android:textColorHint="#66FFFFFF"
                         android:enabled="false"
-                        android:inputType="textEmailAddress"
-                        android:paddingEnd="40dp"/>
-
+                        android:paddingEnd="40dp"
+                        android:backgroundTint="@color/text_secondary"/>
                     <ImageButton
                         android:id="@+id/btnEditEmail"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:background="@null"
-                        android:contentDescription="@string/pen_icon"
-                        android:src="@drawable/baseline_edit_24"/>
+                        android:src="@drawable/baseline_edit_24"
+                        app:tint="@color/text_secondary"/>
                 </RelativeLayout>
 
-                <!-- Portfolio -->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
-
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp">
                     <EditText
                         android:id="@+id/etPortfolio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/portfolio_website"
+                        android:hint="Portfolio Website"
+                        android:textColor="@color/white"
+                        android:textColorHint="#66FFFFFF"
                         android:enabled="false"
-                        android:inputType="textUri"
-                        android:paddingEnd="40dp"/>
-
+                        android:paddingEnd="40dp"
+                        android:backgroundTint="@color/text_secondary"/>
                     <ImageButton
                         android:id="@+id/btnEditPortfolio"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:contentDescription="@string/pen_icon"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:background="@null"
-                        android:src="@drawable/baseline_edit_24"/>
+                        android:src="@drawable/baseline_edit_24"
+                        app:tint="@color/text_secondary"/>
                 </RelativeLayout>
 
             </LinearLayout>

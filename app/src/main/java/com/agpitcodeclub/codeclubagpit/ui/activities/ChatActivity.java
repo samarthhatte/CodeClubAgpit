@@ -31,6 +31,13 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+//imports for notifications
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -55,6 +62,7 @@ public class ChatActivity extends AppCompatActivity {
     String chatId;
     ArrayList<MessageModel> messageList;
     ChatAdapter chatAdapter;
+    private String currentUserName = "Someone"; // To store the sender's name
 
 
     @Override
@@ -112,8 +120,74 @@ public class ChatActivity extends AppCompatActivity {
                 messageBox.setText("");
             }
         });
+
+        fetchCurrentUserName();
+
+        sendBtn.setOnClickListener(v -> {
+            String msg = messageBox.getText().toString().trim();
+            if (!msg.isEmpty()) {
+                sendMessage(msg);
+                // NEW: Trigger notification logic
+                prepareNotification(msg);
+                messageBox.setText("");
+            }
+        });
     }
 
+    private void fetchCurrentUserName() {
+        db.collection("users").document(senderUid).get().addOnSuccessListener(doc -> {
+            if (doc.exists()) {
+                currentUserName = doc.getString("name");
+            }
+        });
+    }
+
+    private void prepareNotification(String messageText) {
+        // 1. Get the receiver's FCM token from Firestore
+        db.collection("users").document(receiverUid).get().addOnSuccessListener(doc -> {
+            if (doc.exists()) {
+                String receiverToken = doc.getString("fcmToken"); // Ensure your users have this field!
+                if (receiverToken != null && !receiverToken.isEmpty()) {
+                    sendChatNotification(receiverToken, messageText);
+                }
+            }
+        });
+    }
+
+    private void sendChatNotification(String token, String messageText) {
+        String url = "https://scaling-trust-ai.onrender.com/send-chat-notification";
+
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("token", token);
+            jsonBody.put("chatId", chatId);
+            jsonBody.put("senderName", currentUserName);
+            jsonBody.put("message", messageText);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                jsonBody,
+                response -> Log.d("CHAT_PUSH", "Notification Sent: " + response.toString()),
+                error -> Log.e("CHAT_PUSH", "Notification Failed", error)
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        // Standard Volley timeout for Render free tier wake-up
+        request.setRetryPolicy(new com.android.volley.DefaultRetryPolicy(
+                60000, 0, com.android.volley.DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        Volley.newRequestQueue(this).add(request);
+    }
 
     // Generate chatId
     private String getChatId(String uid1, String uid2) {

@@ -3,164 +3,190 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="#FFFFFF">
+    android:background="@color/black"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <!-- Header -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="About Code Club AGPIT"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:layout_marginBottom="12dp"/>
+            android:textSize="28sp"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/white"
+            android:layout_marginBottom="4dp"/>
 
-        <!-- Board of Directors & Faculty -->
+        <View
+            android:layout_width="60dp"
+            android:layout_height="4dp"
+            android:background="@color/text_secondary"
+            android:layout_marginBottom="24dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AGPIT Board of Directors &amp; Faculty"
-            android:textSize="20sp"
+            android:text="Board of Directors &amp; Faculty"
+            android:textSize="18sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.1"
             android:textStyle="bold"
-            android:textColor="?attr/colorOnSurface"
-            android:layout_marginTop="24dp"
+            android:textColor="@color/text_secondary"
             android:layout_marginBottom="12dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFaculty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="16dp" />
+            android:layout_marginBottom="24dp"
+            android:nestedScrollingEnabled="false" />
 
-
-        <!-- Who We Are Card -->
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#111111"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#22FFFFFF">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Who We Are"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:paddingBottom="6dp"/>
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="We are a student-run coding community at AGPIT, passionate about coding, learning, and collaboration."
-                    android:textSize="14sp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Who We Are"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="8dp"/>
 
-        <!-- Mission Card -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="We are a student-run coding community at AGPIT, passionate about coding, learning, and collaboration."
+                        android:textColor="#BBFFFFFF"
+                        android:lineSpacingExtra="4dp"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#111111"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#22FFFFFF">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Our Mission"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:paddingBottom="6dp"/>
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="To empower students with technical skills and provide hands-on experience in real-world technology challenges."
-                    android:textSize="14sp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Our Mission"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="8dp"/>
 
-        <!-- Offerings Card -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="To empower students with technical skills and provide hands-on experience in real-world technology challenges."
+                        android:textColor="#BBFFFFFF"
+                        android:lineSpacingExtra="4dp"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#111111"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/text_secondary">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="What We Offer"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:paddingBottom="6dp"/>
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="- Coding challenges &amp; hackathons\n- Workshops &amp; tutorials\n- Guest lectures\n- Project showcases\n- Peer learning sessions"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="What We Offer"
+                        android:textColor="@color/text_secondary"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="8dp"/>
 
-        <!-- Join Us / Website Link -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="• Coding challenges &amp; hackathons\n• Workshops &amp; tutorials\n• Guest lectures\n• Project showcases\n• Peer learning sessions"
+                        android:textColor="#BBFFFFFF"
+                        android:lineSpacingExtra="6dp"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:layout_marginBottom="32dp"
+                app:cardBackgroundColor="@color/text_secondary"
+                app:cardCornerRadius="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/btnWebsite"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Our officail Code Club AGPIT website"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:paddingBottom="6dp"/>
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackground">
 
-                <TextView
-                    android:id="@+id/tvWebsite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Visit our website: https://codeclubagpit.vercel.app"
-                    android:textSize="14sp"
-                    android:textColor="@color/purple_500" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Visit Official Website"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
 
+                    <TextView
+                        android:id="@+id/tvWebsite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="codeclubagpit.vercel.app"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
