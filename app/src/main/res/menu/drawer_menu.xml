@@ -6,9 +6,17 @@
             android:icon="@drawable/ic_people"
             android:title="Members" />
         <item
+            android:id="@+id/nav_manage_admins"
+            android:icon="@drawable/ic_admin"
+            android:title="Manage Admins" />
+        <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_gallery"
+            android:icon="@drawable/ic_gallery_placeholder"
             android:title="Gallery" />
+        <item
+            android:id="@+id/nav_add_images_to_gallery"
+            android:icon="@drawable/ic_gallery"
+            android:title="Add Images to Gallery" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_info"
@@ -21,6 +29,17 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
             android:title="Settings" />
+
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_notification"
+            android:title="Push Alert" />
+
+        <item
+            android:id="@+id/nav_add_events"
+            android:icon="@drawable/ic_event_add"
+            android:title="Add Event" />
+
         <item
             android:id="@+id/nav_events"
             android:icon="@drawable/ic_event_note"

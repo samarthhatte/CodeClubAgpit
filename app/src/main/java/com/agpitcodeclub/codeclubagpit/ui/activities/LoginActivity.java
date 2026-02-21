@@ -6,6 +6,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.View;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import androidx.activity.EdgeToEdge;
 import androidx.core.view.WindowCompat;
@@ -46,6 +50,14 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> loginUser());
         tvForgotPassword.setOnClickListener(v -> resetPassword());
+
+        View mainView = findViewById(R.id.login_layout);
+        ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
 
     }
 
@@ -120,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         startActivity(
                                 new Intent(LoginActivity.this,
-                                        AdminDashboardActivity.class)
+                                        HomePage.class)
                         );
 
                     } else {

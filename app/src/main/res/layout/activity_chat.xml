@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mainChatLayout"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     android:background="@color/club_background"
+
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -41,15 +43,33 @@
                 app:strokeColor="@color/text_secondary"
                 app:strokeWidth="1dp" />
 
-            <TextView
-                android:id="@+id/userName"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="sans-serif-medium"
-                android:text="Member Name"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Member Name"
+                    android:textColor="@color/white"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/txtRoleTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="0.05"
+                    android:text="MEMBER"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="9sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

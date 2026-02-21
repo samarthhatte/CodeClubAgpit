@@ -2,13 +2,17 @@ package com.agpitcodeclub.codeclubagpit.ui.activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.agpitcodeclub.codeclubagpit.R;
 import com.android.volley.Request;
@@ -41,6 +45,14 @@ public class AdminPushActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_push);
         EdgeToEdge.enable(this);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
+
+        View mainView = findViewById(R.id.adminPushLayout);
+        ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
 
 
         db = FirebaseFirestore.getInstance();

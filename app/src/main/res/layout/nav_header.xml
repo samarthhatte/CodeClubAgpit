@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="180dp"
     android:background="@color/club_background"
@@ -8,18 +9,22 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/nav_user_image"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:src="@drawable/ic_codeclub_logo" />
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_user_placeholder"
+        app:shapeAppearanceOverlay="@style/CircleImageView" />
 
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingTop="8dp"
-    android:text="Code Club AGPIT"
-    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-    android:textColor="@color/white"
-    android:textStyle="bold" />
+        android:id="@+id/nav_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:text="Welcome, User"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 </LinearLayout>
