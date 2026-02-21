@@ -10,6 +10,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AutoCompleteTextView;
+import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import android.graphics.Color;
 
 import com.agpitcodeclub.codeclubagpit.ui.activities.ChatActivity;
 import com.agpitcodeclub.codeclubagpit.ui.activities.FullScreenImageActivity;
@@ -62,6 +67,26 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
         holder.nameText.setText(user.getName());
 
         String profileUrl = user.getProfilePic();
+        // --- TAG LOGIC (Aesthetic & Editable) ---
+        TextView txtRoleTag = holder.itemView.findViewById(R.id.txtRoleTag);
+        String customTitle = user.getCustomTitle();
+        String baseRole = user.getRole();
+
+        // 1. Display Logic
+        if (customTitle != null && !customTitle.isEmpty()) {
+            txtRoleTag.setText(customTitle);
+            txtRoleTag.setTextColor(Color.parseColor("#FFD700")); // Gold for special titles
+        } else {
+            txtRoleTag.setText(baseRole != null ? baseRole : "STUDENT");
+            txtRoleTag.setTextColor(Color.BLACK); // Default black for standard roles
+        }
+
+        // 2. Click Logic for Admins
+        txtRoleTag.setOnClickListener(v -> {
+            if (isAdmin || isSuperAdmin) {
+                showEditTagDialog(v, user);
+            }
+        });
 
 // ✅ Load profile image
         if (profileUrl != null && !profileUrl.isEmpty()) {
@@ -178,6 +203,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
     }
 
 
+
     private void confirmRoleChange(View v, String userId, String newRole) {
         new AlertDialog.Builder(v.getContext())
                 .setTitle("Confirm Action")
@@ -233,7 +259,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
     static class MemberViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView imgMember;
-        TextView nameText, skillsText;
+        TextView nameText, skillsText, txtRoleTag;
         ImageButton btnGithub, btnLinkedIn, btnEmail, btnPortfolio;
         Button btnAdminAction;
 
@@ -241,6 +267,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
             super(itemView);
             imgMember = itemView.findViewById(R.id.imgMember);
             nameText = itemView.findViewById(R.id.txtName);
+            txtRoleTag = itemView.findViewById(R.id.txtRoleTag); // Initialize here
             skillsText = itemView.findViewById(R.id.txtSkills);
             btnGithub = itemView.findViewById(R.id.btnGithub);
             btnLinkedIn = itemView.findViewById(R.id.btnLinkedIn);
@@ -249,4 +276,47 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
             btnAdminAction = itemView.findViewById(R.id.btnAdminAction);
         }
     }
+    private void showEditTagDialog(View v, UserModel user) {
+        String[] suggestions = {
+                "President", "Vice President", "Secretary", "Treasurer",
+                "Android Lead", "Web Lead", "AI/ML Lead", "Design Lead", "Code Club Lead",
+                "Technical Head", "Event Coordinator"
+        };
+        // Create the input view with Prachi's aesthetic in mind
+        AutoCompleteTextView input = new AutoCompleteTextView(v.getContext());
+        input.setText(user.getCustomTitle());
+        input.setHint("Enter position...");
+
+        ArrayAdapter<String> suggestionAdapter = new ArrayAdapter<>(v.getContext(),
+                android.R.layout.simple_dropdown_item_1line, suggestions);
+        input.setAdapter(suggestionAdapter);
+        input.setThreshold(1); // Suggest after 1 letter
+
+        // Layout container for padding in dialog
+        FrameLayout container = new FrameLayout(v.getContext());
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = 60; params.rightMargin = 60; params.topMargin = 30;
+        input.setLayoutParams(params);
+        container.addView(input);
+
+        new MaterialAlertDialogBuilder(v.getContext())
+                .setTitle("Assign Custom Title")
+                .setMessage("Define " + user.getName() + "'s specific role in the club.")
+                .setView(container)
+                .setPositiveButton("Update", (dialog, which) -> {
+                    String newTitle = input.getText().toString().trim();
+                    db.collection("users").document(user.getId())
+                            .update("customTitle", newTitle)
+                            .addOnSuccessListener(aVoid -> Toast.makeText(v.getContext(), "Role Assigned!", Toast.LENGTH_SHORT).show());
+                })
+                .setNeutralButton("Clear", (dialog, which) -> {
+                    db.collection("users").document(user.getId())
+                            .update("customTitle", "")
+                            .addOnSuccessListener(aVoid -> Toast.makeText(v.getContext(), "Custom role removed", Toast.LENGTH_SHORT).show());
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
 }
+

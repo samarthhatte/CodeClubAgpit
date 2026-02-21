@@ -1,17 +1,18 @@
 package com.agpitcodeclub.codeclubagpit.ui.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.core.view.WindowCompat;
-import com.agpitcodeclub.codeclubagpit.ui.adapters.EventAdapter;
-import com.agpitcodeclub.codeclubagpit.R;
 import androidx.viewpager2.widget.ViewPager2;
-import android.os.Handler;
+
+import com.agpitcodeclub.codeclubagpit.R;
+import com.agpitcodeclub.codeclubagpit.ui.adapters.EventAdapter;
 import com.agpitcodeclub.codeclubagpit.ui.adapters.SliderAdapter;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,7 +20,6 @@ import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class EventsActivity extends AppCompatActivity {
 
@@ -27,6 +27,11 @@ public class EventsActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private final List<DocumentSnapshot> eventList = new ArrayList<>();
 
+    // Slider variables
+    private ViewPager2 viewPagerSlider;
+    private SliderAdapter sliderAdapter;
+    private final List<String> sliderImages = new ArrayList<>();
+    private final List<String> sliderTitles = new ArrayList<>();
     private Handler sliderHandler;
     private Runnable sliderRunnable;
 
@@ -37,56 +42,71 @@ public class EventsActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
-
-
-
         db = FirebaseFirestore.getInstance();
         rvEvents = findViewById(R.id.rvEvents);
+        viewPagerSlider = findViewById(R.id.viewPagerSlider);
+
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
 
-        // Add images for your Code Club (Use your actual Firebase image URLs here)
-        ViewPager2 viewPagerSlider = findViewById(R.id.viewPagerSlider);
+        // 1. Initialize with Static Content
+        initStaticSlider();
 
-        List<String> images = new ArrayList<>();
-        List<String> titles = new ArrayList<>();
+        // 2. Setup Auto-Slide Logic
+        setupAutoSlide();
 
-        images.add("https://codeclubagpit.vercel.app/events/JS1.png");
-        titles.add("Android Workshop 2026");
+        // 3. Load Dynamic Content (List + Slider Update)
+        loadEventsFromFirestore();
+    }
 
-        images.add("https://lh3.googleusercontent.com/pw/AP1GczM6xtRuWFZkR6UAMmBt6vMRNm-JgXgSkHFrDsWxZd_W39dlIlepltwWF8sqSa6vCaPBpYuv28LcTOyHi4ddHYGjYjMoWaf2bRzOQ41P7vNov-0cxiHyr3LEHEqzUAcffyIlBGRNWVzZah45I15hmIMd=w878-h897-s-no-gm?authuser=0");
-        titles.add("AGPIT Hackathon");
+    private void initStaticSlider() {
+        sliderImages.add("https://codeclubagpit.vercel.app/events/JS1.png");
+        sliderTitles.add("Android Workshop 2026");
 
-        images.add("https://codeclubagpit.vercel.app/events/launchFY1.png");
-        titles.add("Code Club Meetup");
+        sliderImages.add("https://codeclubagpit.vercel.app/events/launchFY1.png");
+        sliderTitles.add("Code Club Meetup");
 
-        SliderAdapter sliderAdapter = new SliderAdapter(images, titles);
+        sliderAdapter = new SliderAdapter(sliderImages, sliderTitles);
         viewPagerSlider.setAdapter(sliderAdapter);
+    }
 
+    private void setupAutoSlide() {
         sliderHandler = new Handler();
-
         sliderRunnable = new Runnable() {
             @Override
             public void run() {
-                int next = (viewPagerSlider.getCurrentItem() + 1) % images.size();
-                viewPagerSlider.setCurrentItem(next, true);
-                sliderHandler.postDelayed(this, 3000);
+                if (!sliderImages.isEmpty()) {
+                    int next = (viewPagerSlider.getCurrentItem() + 1) % sliderImages.size();
+                    viewPagerSlider.setCurrentItem(next, true);
+                    sliderHandler.postDelayed(this, 3000);
+                }
             }
         };
 
+        // --- Add this block ---
+        viewPagerSlider.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                // Reset the timer whenever the page changes (manual or auto)
+                sliderHandler.removeCallbacks(sliderRunnable);
+                sliderHandler.postDelayed(sliderRunnable, 3000);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+                // Optional: Pause while dragging, resume when idle
+                if (state == ViewPager2.SCROLL_STATE_DRAGGING) {
+                    sliderHandler.removeCallbacks(sliderRunnable);
+                } else if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                    sliderHandler.postDelayed(sliderRunnable, 3000);
+                }
+            }
+        });
+        // ----------------------
+
         sliderHandler.postDelayed(sliderRunnable, 3000);
-
-
-
-        loadEventsFromFirestore();
     }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (sliderHandler != null && sliderRunnable != null) {
-            sliderHandler.removeCallbacks(sliderRunnable);
-        }
-    }
-
 
     private void loadEventsFromFirestore() {
         db.collection("events")
@@ -96,6 +116,21 @@ public class EventsActivity extends AppCompatActivity {
                     eventList.clear();
                     eventList.addAll(queryDocumentSnapshots.getDocuments());
 
+                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                        // CHANGED: Use "imageUrl" and "title" to match your DB
+                        String imageUrl = doc.getString("imageUrl");
+                        String title = doc.getString("title");
+
+                        if (imageUrl != null && !imageUrl.isEmpty()) {
+                            // Adding to the top of the list
+                            sliderImages.add(0, imageUrl);
+                            sliderTitles.add(0, title != null ? title : "New Event");
+                        }
+                    }
+
+                    // Notify adapter that data has changed
+                    sliderAdapter.notifyDataSetChanged();
+
                     EventAdapter adapter = new EventAdapter(eventList);
                     rvEvents.setAdapter(adapter);
                 })
@@ -104,4 +139,27 @@ public class EventsActivity extends AppCompatActivity {
                 );
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (sliderHandler != null) {
+            sliderHandler.removeCallbacks(sliderRunnable);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sliderHandler != null) {
+            sliderHandler.postDelayed(sliderRunnable, 3000);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (sliderHandler != null && sliderRunnable != null) {
+            sliderHandler.removeCallbacks(sliderRunnable);
+        }
+    }
 }

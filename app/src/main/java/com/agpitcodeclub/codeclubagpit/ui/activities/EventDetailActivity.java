@@ -1,69 +1,72 @@
 package com.agpitcodeclub.codeclubagpit.ui.activities;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.core.view.WindowCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.agpitcodeclub.codeclubagpit.R;
-import com.google.firebase.firestore.FirebaseFirestore;
-import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
-
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class EventDetailActivity extends AppCompatActivity {
 
+    private ImageView ivEventBanner;
+    private TextView tvTitle, tvDate, tvTime, tvLocation, tvDescription;
     private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
-        EdgeToEdge.enable(this);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
 
-
-        ImageView ivEventBanner = findViewById(R.id.ivEventBanner);
-        TextView tvTitle = findViewById(R.id.tvTitle);
-        TextView tvDate = findViewById(R.id.tvDate);
-        TextView tvDescription = findViewById(R.id.tvDescription);
-
-        String eventId = getIntent().getStringExtra("eventId");
-
-        if (eventId == null) {
-            Toast.makeText(this, "Invalid Event", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+        // Initialize Views
+        ivEventBanner = findViewById(R.id.ivEventBanner);
+        tvTitle = findViewById(R.id.tvTitle);
+        tvDate = findViewById(R.id.tvDate);
+        tvTime = findViewById(R.id.tvTime);
+        tvLocation = findViewById(R.id.tvLocation);
+        tvDescription = findViewById(R.id.tvDescription);
 
         db = FirebaseFirestore.getInstance();
 
-        db.collection("events").document(eventId)
-                .get()
-                .addOnSuccessListener(doc -> {
-                    if (doc.exists()) {
+        // Get Event ID from Intent
+        String eventId = getIntent().getStringExtra("eventId");
 
-                        tvTitle.setText(doc.getString("title"));
-                        tvDate.setText(doc.getString("date"));
-                        tvDescription.setText(doc.getString("description"));
+        if (eventId != null) {
+            fetchEventDetails(eventId);
+        } else {
+            Toast.makeText(this, "Event data not found", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
 
-                        String imageUrl = doc.getString("imageUrl");
+    private void fetchEventDetails(String eventId) {
+        db.collection("events").document(eventId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Bind Data (Matching your DB keys)
+                        tvTitle.setText(documentSnapshot.getString("title"));
+                        tvDate.setText(documentSnapshot.getString("date"));
+                        tvDescription.setText(documentSnapshot.getString("description"));
 
+                        // New fields with defaults
+                        String time = documentSnapshot.getString("time");
+                        String location = documentSnapshot.getString("location");
+                        tvTime.setText(time != null ? time : "TBA");
+                        tvLocation.setText(location != null ? location : "AGPIT Campus");
+
+                        String imageUrl = documentSnapshot.getString("imageUrl");
                         Glide.with(this)
                                 .load(imageUrl)
-                                .placeholder(R.drawable.event_placeholder) // optional
-                                .error(R.drawable.event_placeholder)       // optional
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.img)
                                 .into(ivEventBanner);
                     }
                 })
                 .addOnFailureListener(e ->
-                        Toast.makeText(this, "Failed to load event", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show()
                 );
     }
 }
