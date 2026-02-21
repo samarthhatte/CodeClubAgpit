@@ -61,10 +61,17 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         MessageModel msg = messageList.get(position);
 
+        // Call the helper method from your updated MessageModel
+        String formattedTime = msg.getFormattedTime();
+
         if (holder instanceof SentViewHolder) {
-            ((SentViewHolder) holder).txtMessage.setText(msg.getText());
+            SentViewHolder sentHolder = (SentViewHolder) holder;
+            sentHolder.txtMessage.setText(msg.getText());
+            sentHolder.txtTime.setText(formattedTime); // Set time
         } else {
-            ((ReceivedViewHolder) holder).txtMessage.setText(msg.getText());
+            ReceivedViewHolder receivedHolder = (ReceivedViewHolder) holder;
+            receivedHolder.txtMessage.setText(msg.getText());
+            receivedHolder.txtTime.setText(formattedTime); // Set time
         }
     }
 
@@ -74,20 +81,22 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     class SentViewHolder extends RecyclerView.ViewHolder {
-        TextView txtMessage;
+        TextView txtMessage, txtTime;
 
         public SentViewHolder(@NonNull View itemView) {
             super(itemView);
             txtMessage = itemView.findViewById(R.id.txtMessage);
+            txtTime = itemView.findViewById(R.id.txtTime); // Match ID in item_message_sent.xml
         }
     }
 
     class ReceivedViewHolder extends RecyclerView.ViewHolder {
-        TextView txtMessage;
+        TextView txtMessage, txtTime;
 
         public ReceivedViewHolder(@NonNull View itemView) {
             super(itemView);
             txtMessage = itemView.findViewById(R.id.txtMessage);
+            txtTime = itemView.findViewById(R.id.txtTime); // Match ID in item_message_received.xml
         }
     }
 }

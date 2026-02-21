@@ -9,6 +9,9 @@
 
         <!-- Dark surface -->
         <item name="colorSurfaceVariant">#1E2238</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
 
     </style>
 

@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Existing colors (keep) -->
     <color name="black">#FF000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="background">#10021b</color>
+
     <color name="purple_500">#6200EE</color>
     <color name="teal_700">#FF018786</color>
-
-    <!-- 🌞 Light mode semantic colors -->
-    <color name="background">#FFFFFF</color>
-    <color name="textPrimary">#000000</color>
-    <color name="cardBg">#F5F5F5</color>
-
-    <!-- Logo Gradient -->
-    <color name="logoGradientStart">#C9B6FF</color> <!-- purple -->
-    <color name="logoGradientEnd">#4A7DFF</color>   <!-- blue -->
-
-
-
+    <color name="cardBg">#1A1A1A</color> <color name="logoGradientStart">#C9B6FF</color>
+    <color name="logoGradientEnd">#4A7DFF</color>
+    <color name="textPrimary">#FFFFFF</color> <color name="club_background">#10021b</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#00ACC1</color> <color name="bottom_nav_colors">#AF0501</color>
+    <color name="her_purple">#660380</color>
 </resources>

@@ -1,5 +1,69 @@
-<androidx.recyclerview.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rvAdmins"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainAdminLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent"
+    android:background="@color/club_background">
+
+    <LinearLayout
+        android:id="@+id/headerInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/tvAdminCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detecting Admins..."
+            android:textColor="#B3FFFFFF"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.05" />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/text_secondary" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAdmins"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerInfo"
+        android:clipToPadding="false"
+        android:padding="12dp" />
+
+    <LinearLayout
+        android:id="@+id/emptyStateContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_admin"
+            android:alpha="0.2"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tvEmptyMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="No admins to manage"
+            android:textColor="#66FFFFFF"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-light" />
+    </LinearLayout>
+
+</RelativeLayout>

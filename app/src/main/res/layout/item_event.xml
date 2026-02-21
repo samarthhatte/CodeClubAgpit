@@ -20,6 +20,7 @@
         android:padding="16dp">
 
         <ImageView
+            android:id="@+id/ivEventIcon"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
@@ -43,14 +44,65 @@
                 android:textStyle="bold"
                 android:textColor="#212121"/>
 
-            <TextView
-                android:id="@+id/tvEventDate"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="19 Jan 2026"
-                android:textColor="#757575"
+                android:orientation="horizontal"
                 android:layout_marginTop="4dp"
-                android:textSize="14sp"/>
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_calendar"
+                    app:tint="#757575"/>
+                <TextView
+                    android:id="@+id/tvEventDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="19 Jan 2026"
+                    android:textColor="#757575"
+                    android:textSize="13sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_clock"
+                    app:tint="#757575"/>
+                <TextView
+                    android:id="@+id/tvEventTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="10:00 AM"
+                    android:textColor="#757575"
+                    android:textSize="13sp"/>
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginStart="12dp"
+                    android:src="@drawable/ic_location"
+                    app:tint="#757575"/>
+                <TextView
+                    android:id="@+id/tvEventLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:text="Lab 1"
+                    android:textColor="#757575"
+                    android:textSize="13sp"
+                    android:ellipsize="end"
+                    android:singleLine="true"/>
+            </LinearLayout>
 
         </LinearLayout>
 

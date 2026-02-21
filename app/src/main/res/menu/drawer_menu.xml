@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_members"
+            android:icon="@drawable/ic_people"
+            android:title="Members" />
+        <item
+            android:id="@+id/nav_manage_admins"
+            android:icon="@drawable/ic_admin"
+            android:title="Manage Admins" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_gallery_placeholder"
+            android:title="Gallery" />
+        <item
+            android:id="@+id/nav_add_images_to_gallery"
+            android:icon="@drawable/ic_gallery"
+            android:title="Add Images to Gallery" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info"
+            android:title="About Us" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+
+        <item
+            android:id="@+id/nav_notifications"
+            android:icon="@drawable/ic_notification"
+            android:title="Push Alert" />
+
+        <item
+            android:id="@+id/nav_add_events"
+            android:icon="@drawable/ic_event_add"
+            android:title="Add Event" />
+
+        <item
+            android:id="@+id/nav_events"
+            android:icon="@drawable/ic_event_note"
+            android:title="Events" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="Logout" />
+
+    </group>
+</menu>

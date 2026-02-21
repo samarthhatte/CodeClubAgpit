@@ -13,6 +13,7 @@ public class UserModel {
     private String email;
     private String portfolio;
     private String id;
+    private String customTitle; // ✅ 1. Add this field
 
 
     // Empty constructor required for Firebase Firestore
@@ -37,7 +38,7 @@ public class UserModel {
     public String getEmail() { return email; }
     public String getPortfolio() { return portfolio; }
     public String getId() { return id; }
-
+    public String getCustomTitle() { return customTitle; } // ✅ 2. Getter for customTitle
 
     // Setters (Required if you want to modify objects locally before saving)
     public void setName(String name) { this.name = name; }
@@ -50,5 +51,6 @@ public class UserModel {
     public void setEmail(String email) { this.email = email; }
     public void setPortfolio(String portfolio) { this.portfolio = portfolio; }
     public void setId(String id) { this.id = id; }
+    public void setCustomTitle(String customTitle) { this.customTitle = customTitle; } // ✅ 3. Setter for customTitle
 
 }

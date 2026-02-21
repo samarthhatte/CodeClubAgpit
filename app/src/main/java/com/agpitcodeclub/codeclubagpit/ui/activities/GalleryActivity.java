@@ -50,7 +50,10 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
     private void fetchAlbums() {
-        progressBar.setVisibility(View.VISIBLE);
+        // Only show progress bar if list is currently empty to avoid flickering on refresh
+        if (albumList.isEmpty()) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
         tvEmpty.setVisibility(View.GONE);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -59,13 +62,9 @@ public class GalleryActivity extends AppCompatActivity {
                 .orderBy("createdAt")
                 .get()
                 .addOnSuccessListener(snapshot -> {
-
                     albumList.clear();
-
                     for (QueryDocumentSnapshot doc : snapshot) {
-
                         AlbumModel album = doc.toObject(AlbumModel.class);
-
                         String albumId = doc.getId();
 
                         albumList.add(new AlbumModel(
@@ -74,8 +73,8 @@ public class GalleryActivity extends AppCompatActivity {
                                 album.getCoverImage()
                         ));
 
-                        // 🔥 THIS WAS MISSING
-                        fixCoverIfNeeded(albumId, album.getCoverImage());
+                        // ❌ DO NOT call fixCoverIfNeeded here.
+                        // It creates a loop for every single album.
                     }
 
                     progressBar.setVisibility(View.GONE);
@@ -91,6 +90,12 @@ public class GalleryActivity extends AppCompatActivity {
                     tvEmpty.setVisibility(View.VISIBLE);
                     tvEmpty.setText("Failed to load albums");
                 });
+    }
+
+    // 🛠️ Move the "Fix" logic to a separate background check or run it only ONCE
+    private void fixAllCovers() {
+        // Logic to sync covers should ideally happen in an Admin Panel
+        // when uploading photos, not every time a user views the gallery.
     }
 
 

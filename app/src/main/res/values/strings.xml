@@ -3,9 +3,9 @@
     <string name="profile_image">Profile Image</string>
     <string name="pen_icon">Pen Icon</string>
     <string name="portfolio_website">Portfolio Website</string>
-        <string name="default_member_name">Member Name</string>
-        <string name="hint_type_message">Type message…</string>
-        <string name="desc_send_button">Send message</string>
+    <string name="default_member_name">Member Name</string>
+    <string name="hint_type_message">Type message…</string>
+    <string name="desc_send_button">Send message</string>
     <string name="email_address">Email Address</string>
     <string name="linkedin_profile">LinkedIn Profile</string>
     <string name="android_developer">Android Developer</string>
@@ -22,4 +22,7 @@
     <string name="welcome_to_agpit_code_club">Welcome to AGPIT Code Club</string>
     <string name="members">Members</string>
     <string name="events">Events</string>
+    <string name="text">Upcoming Events</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

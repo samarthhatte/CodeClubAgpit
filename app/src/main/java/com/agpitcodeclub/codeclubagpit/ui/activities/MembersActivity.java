@@ -2,6 +2,10 @@ package com.agpitcodeclub.codeclubagpit.ui.activities;
 
 import android.os.Bundle;
 import android.widget.Toast;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.graphics.Insets;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -85,6 +89,14 @@ public class MembersActivity extends AppCompatActivity {
         // Default tab
         TabLayout.Tab defaultTab = tabLayout.getTabAt(0);
         if (defaultTab != null) defaultTab.select();
+
+        View mainView = findViewById(R.id.membersLayout);
+        ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
     }
 
     public void switchToRoleTab(String role) {
@@ -103,9 +115,10 @@ public class MembersActivity extends AppCompatActivity {
             currentListener = null;
         }
 
+        // 🟢 REMOVED .whereNotEqualTo("role", "super_admin")
+        // Firestore won't let you filter equality and inequality on the same field easily
         currentListener = db.collection("users")
                 .whereEqualTo("role", role)
-                .whereNotEqualTo("role", "super_admin")
                 .addSnapshotListener((value, error) -> {
 
                     if (error != null) {
@@ -120,6 +133,13 @@ public class MembersActivity extends AppCompatActivity {
                         UserModel user = doc.toObject(UserModel.class);
                         if (user != null) {
                             user.setId(doc.getId());
+
+                            // 🟢 FILTER LOCALLY: Only skip Super Admins
+                            // This allows "admin" to be visible if they are in this category
+                            if ("super_admin".equals(user.getRole())) {
+                                continue;
+                            }
+
                             memberList.add(user);
                         }
                     }

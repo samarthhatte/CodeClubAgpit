@@ -3,9 +3,13 @@
     <style name="Base.Theme.CodeClubAgpit" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
     <style name="Theme.CodeClubAgpit" parent="Base.Theme.CodeClubAgpit" />
+
 
     <style name="CircleImage">
         <item name="cornerSize">50%</item>
