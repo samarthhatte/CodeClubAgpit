@@ -130,8 +130,14 @@ public class HomePage extends AppCompatActivity {
                 startActivity(new Intent(this, AboutUsActivity.class));
             } else if (id == R.id.nav_add_images_to_gallery) {
                 startActivity(new Intent(this, AdminGallery.class));
+// Locate this block in your HomePage.java (around line 118)
             } else if (id == R.id.nav_events) {
-                startActivity(new Intent(this, EventsActivity.class));
+                // 🟢 FIXED: Create intent and pass the role
+                Intent intent = new Intent(this, EventsActivity.class);
+                intent.putExtra("role", currentRole);
+                startActivity(intent);
+            }else if (id == R.id.nav_settings) {
+                startActivity(new Intent(this, SettingsActivity.class));
             }
             drawerLayout.closeDrawer(GravityCompat.START);
             return true;
