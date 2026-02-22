@@ -1,5 +1,6 @@
 package com.agpitcodeclub.codeclubagpit.ui.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agpitcodeclub.codeclubagpit.R;
+import com.agpitcodeclub.codeclubagpit.ui.activities.EventDetailActivity;
 import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -48,10 +50,18 @@ public class CommunityEventAdapter extends RecyclerView.Adapter<CommunityEventAd
         holder.tvTime.setText(time);
         holder.tvLocation.setText(location);
 
+        // Load Image (Only once needed)
         Glide.with(holder.itemView.getContext())
                 .load(imageUrl)
-                .placeholder(R.drawable.img) // Your default placeholder
+                .placeholder(R.drawable.img)
                 .into(holder.imgEvent);
+
+        // 🔥 Click Listener to open details
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), EventDetailActivity.class);
+            intent.putExtra("eventId", doc.getId());
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override

@@ -161,34 +161,55 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
             }
         });
 
-        // 2️⃣ Admin actions
+// 2️⃣ Admin actions
         holder.btnAdminAction.setVisibility(View.GONE);
 
-        if (!isAdmin) return;
+        // Safety: Don't show admin actions to non-admins or on yourself
+        if (!isAdmin || user.getId().equals(currentUid)) return;
 
-        // 🚫 Prevent self role change
-        if (user.getId().equals(currentUid)) return;
+        String role = user.getRole() != null ? user.getRole() : "student";
 
-        switch (user.getRole()) {
+        switch (role) {
             case "student":
+                // ACTION: Promote to Member
                 holder.btnAdminAction.setText("Make Member");
                 holder.btnAdminAction.setVisibility(View.VISIBLE);
                 holder.btnAdminAction.setOnClickListener(v ->
                         confirmRoleChange(v, user.getId(), "member"));
+
+                // ACTION: Delete Student Account (Long Click for safety or use a separate button)
+                holder.itemView.setOnLongClickListener(v -> {
+                    confirmDeleteAccount(v, user);
+                    return true;
+                });
                 break;
 
             case "member":
+                holder.btnAdminAction.setVisibility(View.VISIBLE);
+                // ACTION: Promote to Admin (Super Admin only) or Alumni (Admin)
                 if (isSuperAdmin) {
                     holder.btnAdminAction.setText("Make Admin");
-                    holder.btnAdminAction.setVisibility(View.VISIBLE);
                     holder.btnAdminAction.setOnClickListener(v ->
                             confirmRoleChange(v, user.getId(), "admin"));
                 } else {
                     holder.btnAdminAction.setText("Make Alumni");
-                    holder.btnAdminAction.setVisibility(View.VISIBLE);
                     holder.btnAdminAction.setOnClickListener(v ->
                             confirmRoleChange(v, user.getId(), "alumni"));
                 }
+
+                // NEW ACTION: Demote to Student (Long Click)
+                holder.btnAdminAction.setOnLongClickListener(v -> {
+                    confirmRoleChange(v, user.getId(), "student");
+                    return true;
+                });
+                break;
+
+            case "alumni":
+                // NEW ACTION: Move back to Member
+                holder.btnAdminAction.setText("Make Member");
+                holder.btnAdminAction.setVisibility(View.VISIBLE);
+                holder.btnAdminAction.setOnClickListener(v ->
+                        confirmRoleChange(v, user.getId(), "member"));
                 break;
 
             case "admin":
@@ -314,6 +335,24 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.MemberView
                     db.collection("users").document(user.getId())
                             .update("customTitle", "")
                             .addOnSuccessListener(aVoid -> Toast.makeText(v.getContext(), "Custom role removed", Toast.LENGTH_SHORT).show());
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void confirmDeleteAccount(View v, UserModel user) {
+        new MaterialAlertDialogBuilder(v.getContext())
+                .setTitle("Remove Account")
+                .setMessage("Are you sure you want to permanently remove " + user.getName() + " from the club? This action cannot be undone.")
+                .setPositiveButton("Delete", (d, w) -> {
+                    db.collection("users").document(user.getId())
+                            .delete()
+                            .addOnSuccessListener(unused ->
+                                    Toast.makeText(v.getContext(), "Account deleted", Toast.LENGTH_SHORT).show()
+                            )
+                            .addOnFailureListener(e ->
+                                    Toast.makeText(v.getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                            );
                 })
                 .setNegativeButton("Cancel", null)
                 .show();

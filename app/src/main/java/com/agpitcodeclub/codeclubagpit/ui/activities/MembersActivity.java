@@ -115,38 +115,56 @@ public class MembersActivity extends AppCompatActivity {
             currentListener = null;
         }
 
-        // 🟢 REMOVED .whereNotEqualTo("role", "super_admin")
-        // Firestore won't let you filter equality and inequality on the same field easily
-        currentListener = db.collection("users")
-                .whereEqualTo("role", role)
-                .addSnapshotListener((value, error) -> {
+        com.google.firebase.firestore.Query query;
 
-                    if (error != null) {
-                        Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                        return;
+        // 1. Use the logic to include Admins when the "Member" tab is selected
+        if (ROLE_MEMBER.equals(role)) {
+            query = db.collection("users")
+                    .whereIn("role", java.util.Arrays.asList(ROLE_MEMBER, "admin"));
+        } else {
+            query = db.collection("users")
+                    .whereEqualTo("role", role);
+        }
+
+        // 2. IMPORTANT: Attach the listener to 'query', NOT 'db.collection("users")'
+        currentListener = query.addSnapshotListener((value, error) -> {
+            if (error != null) {
+                Toast.makeText(this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (value == null) return;
+
+            memberList.clear();
+            for (DocumentSnapshot doc : value.getDocuments()) {
+                UserModel user = doc.toObject(UserModel.class);
+                if (user != null) {
+                    user.setId(doc.getId());
+
+                    if ("super_admin".equals(user.getRole())) {
+                        continue;
                     }
 
-                    if (value == null) return;
+                    memberList.add(user);
+                }
+            }
 
-                    memberList.clear();
-                    for (DocumentSnapshot doc : value.getDocuments()) {
-                        UserModel user = doc.toObject(UserModel.class);
-                        if (user != null) {
-                            user.setId(doc.getId());
+            // 🟢 CUSTOM SORTING LOGIC START
+            java.util.Collections.sort(memberList, (u1, u2) -> {
+                int p1 = getTitlePriority(u1.getCustomTitle());
+                int p2 = getTitlePriority(u2.getCustomTitle());
 
-                            // 🟢 FILTER LOCALLY: Only skip Super Admins
-                            // This allows "admin" to be visible if they are in this category
-                            if ("super_admin".equals(user.getRole())) {
-                                continue;
-                            }
+                // If priorities are same, sort by name alphabetically
+                if (p1 == p2) {
+                    return u1.getName().compareToIgnoreCase(u2.getName());
+                }
+                return Integer.compare(p1, p2);
+            });
+            // 🟢 CUSTOM SORTING LOGIC END
 
-                            memberList.add(user);
-                        }
-                    }
-                    adapter.notifyDataSetChanged();
-                });
+            adapter.notifyDataSetChanged();
+        });
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -155,4 +173,20 @@ public class MembersActivity extends AppCompatActivity {
             currentListener = null;
         }
     }
+
+    private int getTitlePriority(String customTitle) {
+        if (customTitle == null || customTitle.isEmpty()) return 100; // Regular members at the bottom
+
+        String title = customTitle.toLowerCase();
+
+        if (title.contains("president") && !title.contains("vice")) return 1;
+        if (title.contains("vice president")) return 2;
+        if (title.contains("secretary")) return 3;
+        if (title.contains("treasurer")) return 4;
+        if (title.contains("lead")) return 5;
+        if (title.contains("head") || title.contains("coordinator")) return 6;
+
+        return 10; // Other custom titles
+    }
+
 }

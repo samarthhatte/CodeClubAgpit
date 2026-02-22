@@ -34,6 +34,7 @@ public class EventsActivity extends AppCompatActivity {
     private final List<String> sliderTitles = new ArrayList<>();
     private Handler sliderHandler;
     private Runnable sliderRunnable;
+    private boolean isAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,10 @@ public class EventsActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         rvEvents = findViewById(R.id.rvEvents);
         viewPagerSlider = findViewById(R.id.viewPagerSlider);
+
+        // Get role from Intent (passed from MainActivity)
+        String role = getIntent().getStringExtra("role");
+        isAdmin = "admin".equals(role) || "super_admin".equals(role);
 
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
 
@@ -131,12 +136,24 @@ public class EventsActivity extends AppCompatActivity {
                     // Notify adapter that data has changed
                     sliderAdapter.notifyDataSetChanged();
 
-                    EventAdapter adapter = new EventAdapter(eventList);
+// Pass the isAdmin boolean we retrieved in onCreate
+                    EventAdapter adapter = new EventAdapter(eventList, isAdmin);
                     rvEvents.setAdapter(adapter);
                 })
                 .addOnFailureListener(e ->
                         Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show()
                 );
+    }
+
+    public void removeEventFromSlider(String imageUrl) {
+        if (imageUrl == null) return;
+
+        int index = sliderImages.indexOf(imageUrl);
+        if (index != -1) {
+            sliderImages.remove(index);
+            sliderTitles.remove(index);
+            sliderAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

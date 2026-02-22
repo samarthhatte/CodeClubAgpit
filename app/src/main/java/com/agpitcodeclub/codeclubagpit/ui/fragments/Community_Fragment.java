@@ -6,15 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.agpitcodeclub.codeclubagpit.R;
 import com.agpitcodeclub.codeclubagpit.ui.adapters.CommunityEventAdapter;
-import com.agpitcodeclub.codeclubagpit.ui.adapters.EventAdapter;
+import com.agpitcodeclub.codeclubagpit.ui.adapters.TeamAdapter; // You'll create this next
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -29,7 +28,7 @@ public class Community_Fragment extends Fragment {
 
     private FirebaseFirestore db;
     private List<DocumentSnapshot> upcomingEventsList = new ArrayList<>();
-    private EventAdapter eventsAdapter;
+    private List<DocumentSnapshot> goldenMembersList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,8 +41,11 @@ public class Community_Fragment extends Fragment {
         upcomingEventsRecycler = view.findViewById(R.id.upcomingEventsRecyclerView);
         teamMembersRecycler = view.findViewById(R.id.teamMembersRecyclerView);
 
-        // 2. Setup Layout Manager (Horizontal for Upcoming Events)
+        // 2. Setup Layout Managers
         upcomingEventsRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        // Grid Layout for Team (2 columns)
+        teamMembersRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         // IMPORTANT: Smooth scrolling fix for NestedScrollView
         upcomingEventsRecycler.setNestedScrollingEnabled(false);
@@ -51,11 +53,10 @@ public class Community_Fragment extends Fragment {
 
         // 3. Load Data
         loadUpcomingEvents();
+        loadGoldenMembers(); // 🔥 New method
 
         return view;
     }
-
-// Inside loadUpcomingEvents() in Community_Fragment.java
 
     private void loadUpcomingEvents() {
         db.collection("events")
@@ -65,14 +66,31 @@ public class Community_Fragment extends Fragment {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     upcomingEventsList.clear();
                     upcomingEventsList.addAll(queryDocumentSnapshots.getDocuments());
-
-                    // Use the NEW CommunityEventAdapter
                     CommunityEventAdapter adapter = new CommunityEventAdapter(upcomingEventsList);
                     upcomingEventsRecycler.setAdapter(adapter);
                 })
                 .addOnFailureListener(e -> {
                     if(getActivity() != null)
                         Toast.makeText(getActivity(), "Failed to load events", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void loadGoldenMembers() {
+        // 🔥 Filtering for members with the golden tag
+        db.collection("users")
+                .whereEqualTo("isGolden", true)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    goldenMembersList.clear();
+                    goldenMembersList.addAll(queryDocumentSnapshots.getDocuments());
+
+                    // Initialize the TeamAdapter
+                    TeamAdapter teamAdapter = new TeamAdapter(goldenMembersList);
+                    teamMembersRecycler.setAdapter(teamAdapter);
+                })
+                .addOnFailureListener(e -> {
+                    if(getActivity() != null)
+                        Toast.makeText(getActivity(), "Failed to load team", Toast.LENGTH_SHORT).show();
                 });
     }
 }
