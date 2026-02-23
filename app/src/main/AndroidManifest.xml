@@ -27,9 +27,6 @@
             android:name=".ui.activities.HomePage"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.CommunityPage"
-            android:exported="false" />
-        <activity
             android:name=".ui.activities.ChatActivity"
             android:exported="true"
             android:windowLayoutInDisplayCutoutMode="shortEdges"

@@ -35,6 +35,7 @@ public class HomePage extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String currentRole = "member"; // Default role
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
