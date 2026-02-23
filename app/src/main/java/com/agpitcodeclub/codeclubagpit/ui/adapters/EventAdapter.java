@@ -87,11 +87,15 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             v.getContext().startActivity(intent);
         });
 
-        // --- 2. Long Click (Admin Delete) ---
+// --- 2. Long Click (Admin Delete) ---
         if (isAdmin) {
             holder.itemView.setOnLongClickListener(v -> {
-                showDeleteConfirmation(v, eventId, position);
-                return true; // consumes the click
+                // Use holder.getBindingAdapterPosition() to get the FRESH index
+                int currentPos = holder.getBindingAdapterPosition();
+                if (currentPos != RecyclerView.NO_POSITION) {
+                    showDeleteConfirmation(v, eventId, currentPos);
+                }
+                return true;
             });
         }
 
@@ -109,23 +113,24 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                             .document(eventId)
                             .delete()
                             .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(v.getContext(), "Event Deleted", Toast.LENGTH_SHORT).show();
-
-                                // 1. Remove from RecyclerView
-                                if (position < events.size()) {
-                                    // Get the image URL before removing the document
+                                // Verify index is still valid before removing
+                                if (position >= 0 && position < events.size()) {
                                     String deletedImageUrl = events.get(position).getString("imageUrl");
 
                                     events.remove(position);
                                     notifyItemRemoved(position);
+                                    // CRITICAL: Tell the adapter to refresh indices for all items after this one
+                                    notifyItemRangeChanged(position, events.size());
 
-                                    // 2. Sync with the Activity's Slider (Optional but Recommended)
                                     if (v.getContext() instanceof EventsActivity) {
                                         EventsActivity activity = (EventsActivity) v.getContext();
                                         activity.removeEventFromSlider(deletedImageUrl);
                                     }
+
+                                    Toast.makeText(v.getContext(), "Event Deleted", Toast.LENGTH_SHORT).show();
                                 }
-                            });
+                            })
+                            .addOnFailureListener(e -> Toast.makeText(v.getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                 })
                 .setNegativeButton("Cancel", null)
                 .show();

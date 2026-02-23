@@ -73,16 +73,25 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
 
         // Get the root view of your layout (ensure your activity_chat.xml has an ID like main)
+        // 1. Modern Keyboard/System Bar Handling
         View mainView = findViewById(R.id.mainChatLayout);
         ViewCompat.setOnApplyWindowInsetsListener(mainView, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+            Insets ime = insets.getInsets(WindowInsetsCompat.Type.ime());
+            boolean isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime());
+
+            // Pushes the layout up based on keyboard height
+            v.setPadding(
+                    systemBars.left,
+                    systemBars.top,
+                    systemBars.right,
+                    isKeyboardVisible ? ime.bottom : systemBars.bottom
+            );
+
+            return WindowInsetsCompat.CONSUMED;
         });
 
-
-
-        // Bind Views
+// Bind Views
         userName = findViewById(R.id.userName);
         messageBox = findViewById(R.id.messageBox);
         sendBtn = findViewById(R.id.sendBtn);
@@ -95,42 +104,52 @@ public class ChatActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         senderUid = auth.getCurrentUser().getUid();
 
-        // Back Button
         backBtn.setOnClickListener(v -> finish());
 
-        // ✅ Notification Open Case
+        // Keyboard "Send" Action
+        messageBox.setOnEditorActionListener((v, actionId, event) -> {
+            String msg = messageBox.getText().toString().trim();
+            if (!msg.isEmpty()) {
+                sendMessage(msg);
+                prepareNotification(msg);
+                messageBox.setText("");
+                return true;
+            }
+            return false;
+        });
+
+        // 2. Auto-scroll when keyboard opens (Replaces TranscriptMode)
+        chatRecycler.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            if (bottom < oldBottom) {
+                chatRecycler.postDelayed(() -> {
+                    if (messageList != null && !messageList.isEmpty()) {
+                        chatRecycler.smoothScrollToPosition(messageList.size() - 1);
+                    }
+                }, 100);
+            }
+        });
+
         String notificationChatId = getIntent().getStringExtra("chatId");
-
         if (notificationChatId != null) {
-
             chatId = notificationChatId;
-
             String[] parts = chatId.split("_");
-
             receiverUid = parts[0].equals(senderUid) ? parts[1] : parts[0];
-
             loadReceiverDetails(receiverUid);
-
-        }
-// ✅ Inside onCreate() Normal Open Case
-        else {
+        } else {
             receiverUid = getIntent().getStringExtra("uid");
             receiverName = getIntent().getStringExtra("name");
             receiverProfilePic = getIntent().getStringExtra("profilePic");
             chatId = getChatId(senderUid, receiverUid);
-
-            // Instead of setupChatUI() directly, load the details to get the role/tag
             loadReceiverDetails(receiverUid);
         }
 
         fetchCurrentUserName();
 
-// Replace the two listeners with this single one
         sendBtn.setOnClickListener(v -> {
             String msg = messageBox.getText().toString().trim();
             if (!msg.isEmpty()) {
                 sendMessage(msg);
-                prepareNotification(msg); // Calls the notification logic
+                prepareNotification(msg);
                 messageBox.setText("");
             }
         });
@@ -222,44 +241,34 @@ public class ChatActivity extends AppCompatActivity {
 
     // Update the method signature to accept these strings
     private void setupChatUI(String rRole, String rCustom) {
-
         userName.setText(receiverName);
         TextView txtRoleTag = findViewById(R.id.txtRoleTag);
 
-        // ✅ Set the Tag based on Receiver's data
         if (rCustom != null && !rCustom.isEmpty()) {
             txtRoleTag.setText(rCustom);
-            txtRoleTag.setTextColor(Color.parseColor("#FFD700")); // Aesthetic Gold
+            txtRoleTag.setTextColor(Color.parseColor("#FFD700"));
         } else {
             txtRoleTag.setText(rRole != null ? rRole.toUpperCase() : "MEMBER");
-            txtRoleTag.setTextColor(Color.parseColor("#BDBDBD")); // Light Grey for standard
+            txtRoleTag.setTextColor(Color.parseColor("#BDBDBD"));
         }
 
-        // Profile Image Logic
+        // Profile Image Logic (Glide)
         if (receiverProfilePic != null && !receiverProfilePic.isEmpty()) {
-            Glide.with(this)
-                    .load(receiverProfilePic)
-                    .placeholder(R.drawable.ic_user_placeholder)
-                    .circleCrop()
-                    .into(profileImage);
-            // ✅ 1. Add Click Listener for Full Screen
+            Glide.with(this).load(receiverProfilePic).placeholder(R.drawable.ic_user_placeholder).circleCrop().into(profileImage);
             profileImage.setOnClickListener(v -> {
                 Intent intent = new Intent(ChatActivity.this, FullScreenImageActivity.class);
                 intent.putExtra("IMAGE_URL", receiverProfilePic);
                 startActivity(intent);
             });
         } else {
-            profileImage.setOnClickListener(v -> {
-                    Toast.makeText(ChatActivity.this, "No profile picture available", Toast.LENGTH_SHORT).show();
-            });
             profileImage.setImageResource(R.drawable.ic_user_placeholder);
         }
 
-        // Initialize Recycler and Load Messages
+        // 3. Setup RecyclerView Layout Manager correctly
         messageList = new ArrayList<>();
         chatAdapter = new ChatAdapter(this, messageList, senderUid);
         LinearLayoutManager lm = new LinearLayoutManager(this);
-        lm.setStackFromEnd(true);
+        lm.setStackFromEnd(true); // Keep messages at the bottom
         chatRecycler.setLayoutManager(lm);
         chatRecycler.setAdapter(chatAdapter);
 

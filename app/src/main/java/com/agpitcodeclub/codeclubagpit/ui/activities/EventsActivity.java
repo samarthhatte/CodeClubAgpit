@@ -52,6 +52,8 @@ public class EventsActivity extends AppCompatActivity {
         isAdmin = "admin".equals(role) || "super_admin".equals(role);
 
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
+        // ADD THIS LINE
+        rvEvents.setNestedScrollingEnabled(false);
 
         // 1. Initialize with Static Content
         initStaticSlider();
