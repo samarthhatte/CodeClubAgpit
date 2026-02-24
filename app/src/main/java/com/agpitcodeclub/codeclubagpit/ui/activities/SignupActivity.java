@@ -24,6 +24,8 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private EditText nameField, emailField, githubField, passwordField;
+    private static final String EMAIL_PATTERN = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+    private static final String GITHUB_PATTERN = "^(https?:\\/\\/)?(www\\.)?github\\.com\\/[A-Za-z0-9_-]+\\/?$";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +52,31 @@ public class SignupActivity extends AppCompatActivity {
         String github = githubField.getText().toString().trim();
         String password = passwordField.getText().toString();
 
-        if (name.isEmpty() || email.isEmpty() || password.length() < 6) {
-            Toast.makeText(this, "Please fill all fields correctly", Toast.LENGTH_SHORT).show();
+        // 1. Basic Name Validation
+        if (name.isEmpty()) {
+            nameField.setError("Name is required");
             return;
         }
 
+        // 2. Email RegEx Validation
+        if (!email.matches(EMAIL_PATTERN)) {
+            emailField.setError("Enter a valid email address");
+            return;
+        }
+
+        // 3. GitHub RegEx Validation
+//        if (!github.isEmpty() && !github.matches(GITHUB_PATTERN)) {
+//            githubField.setError("Enter a valid GitHub profile URL");
+//            return;
+//        }
+
+        // 4. Password Validation
+        if (password.length() < 6) {
+            passwordField.setError("Password must be at least 6 characters");
+            return;
+        }
+
+        // If all checks pass, proceed to Auth
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -87,7 +109,7 @@ public class SignupActivity extends AppCompatActivity {
                             .document(uid)
                             .set(userMap, SetOptions.merge())
                             .addOnSuccessListener(unused -> {
-                                startActivity(new Intent(this, MainActivity.class));
+                                startActivity(new Intent(this, HomePage.class));
                                 finish();
                             })
                             .addOnFailureListener(e ->

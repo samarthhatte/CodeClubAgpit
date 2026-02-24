@@ -18,8 +18,8 @@ android {
                 arguments += "-DANDROID_ALIGNED_16KB=ON"
             }
         }
-        versionCode = 39
-        versionName = "4.9"
+        versionCode = 40
+        versionName = "5.0"
         ndkVersion = "28.0.12433510"
         ndk {
             abiFilters += listOf("armeabi-v7a", "arm64-v8a")
