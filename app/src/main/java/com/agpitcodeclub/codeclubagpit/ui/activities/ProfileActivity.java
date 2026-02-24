@@ -43,7 +43,12 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton btnEditGithub, btnEditLinkedIn, btnEditEmail, btnEditPortfolio;
     private EditText currentEditingField = null;
 
-
+    // RegEx Patterns
+    private static final String EMAIL_PATTERN = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+    private static final String GITHUB_PATTERN = "^(https?:\\/\\/)?(www\\.)?github\\.com\\/[A-Za-z0-9_-]+\\/?$";
+    private static final String LINKEDIN_PATTERN = "^(https?:\\/\\/)?(www\\.)?linkedin\\.com\\/(in|pub)\\/[A-Za-z0-9_-]+\\/?$";
+    // General URL pattern for Portfolio
+    private static final String URL_PATTERN = "^(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?$";
 
     private FirebaseFirestore db;
     private String currentUserId;
@@ -94,6 +99,23 @@ public class ProfileActivity extends AppCompatActivity {
 
         btnEditPic.setOnClickListener(v -> openGallery());
         btnAddSkill.setOnClickListener(v -> showAddSkillDialog());
+    }
+
+    private boolean isInputValid(String value, String fieldName) {
+        if (value.isEmpty()) return true; // Allow empty if they want to clear it
+
+        switch (fieldName) {
+            case "email":
+                return value.matches(EMAIL_PATTERN);
+            case "github":
+                return value.matches(GITHUB_PATTERN);
+            case "linkedin":
+                return value.matches(LINKEDIN_PATTERN);
+            case "portfolio":
+                return value.matches(URL_PATTERN);
+            default:
+                return true;
+        }
     }
 
     private void loadUserProfile() {
@@ -296,9 +318,17 @@ public class ProfileActivity extends AppCompatActivity {
     private void saveField(EditText editText, String fieldName) {
         String value = editText.getText().toString().trim();
 
-        editText.setEnabled(false);
+        // Validate before proceeding
+        if (!isInputValid(value, fieldName)) {
+            editText.setError("Invalid " + fieldName + " format");
+            editText.requestFocus();
+            // Keep currentEditingField as is so user can correct it
+            return;
+        }
 
-        if (value.isEmpty()) return;
+        // If valid, disable the field and save
+        editText.setEnabled(false);
+        currentEditingField = null;
 
         Map<String, Object> data = new java.util.HashMap<>();
         data.put(fieldName, value);
@@ -307,11 +337,12 @@ public class ProfileActivity extends AppCompatActivity {
                 .document(currentUserId)
                 .set(data, com.google.firebase.firestore.SetOptions.merge())
                 .addOnSuccessListener(aVoid ->
-                        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, fieldName + " updated", Toast.LENGTH_SHORT).show()
                 )
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Save failed", Toast.LENGTH_SHORT).show()
-                );
+                .addOnFailureListener(e -> {
+                    editText.setEnabled(true); // Re-enable if DB write fails
+                    Toast.makeText(this, "Save failed", Toast.LENGTH_SHORT).show();
+                });
     }
 
 
