@@ -28,7 +28,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="24dp">
+                android:padding="28dp">
 
                 <ImageView
                     android:layout_width="120dp"

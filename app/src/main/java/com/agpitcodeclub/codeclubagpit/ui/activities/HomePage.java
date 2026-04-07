@@ -117,8 +117,6 @@ public class HomePage extends AppCompatActivity {
                 Intent intent = new Intent(this, MembersActivity.class);
                 intent.putExtra("role", currentRole); // Always pass the role
                 startActivity(intent);
-            } else if (id == R.id.nav_admin) {
-                startActivity(new Intent(this, AdminDashboardActivity.class));
             } else if (id == R.id.nav_add_events) {
                 startActivity(new Intent(this, AddEventActivity.class));
             } else if (id == R.id.nav_notifications) {
