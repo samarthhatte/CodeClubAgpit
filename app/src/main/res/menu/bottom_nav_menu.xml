@@ -9,8 +9,5 @@
         android:id="@+id/nav_community"
         android:icon="@drawable/ic_people"
         android:title="Community" />
-    <item
-        android:id="@+id/nav_admin"
-        android:icon="@drawable/ic_admin"
-        android:title="Admin Control" />
+
 </menu>

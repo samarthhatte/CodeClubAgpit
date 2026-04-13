@@ -52,12 +52,36 @@
             android:textColor="@color/white"
             android:layout_marginTop="16dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Android Developer"
-            android:textSize="16sp"
-            android:textColor="@color/text_secondary"/>
+            android:layout_marginTop="4dp"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp">
+
+            <EditText
+                android:id="@+id/etRole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Your Role (e.g. Web Developer)"
+                android:textColor="@color/text_secondary"
+                android:textColorHint="#66FFFFFF"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:enabled="false"
+                android:background="@null"
+                android:inputType="textPersonName"/>
+
+            <ImageButton
+                android:id="@+id/btnEditRole"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:src="@drawable/baseline_edit_24"
+                app:tint="@color/text_secondary"/>
+        </RelativeLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

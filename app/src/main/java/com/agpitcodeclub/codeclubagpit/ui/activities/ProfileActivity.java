@@ -38,6 +38,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     private ShapeableImageView ivProfilePic;
     private TextView tvUserName;
+    private EditText etRole;
+    private ImageButton btnEditRole;
     private ChipGroup cgSkills;
     private EditText etGithub, etLinkedIn, etEmail, etPortfolio;
     private ImageButton btnEditGithub, btnEditLinkedIn, btnEditEmail, btnEditPortfolio;
@@ -73,6 +75,11 @@ public class ProfileActivity extends AppCompatActivity {
         }
         currentUserId = mAuth.getCurrentUser().getUid();
 
+        etRole = findViewById(R.id.etRole);
+        btnEditRole = findViewById(R.id.btnEditRole);
+
+// Add listener to the pencil button
+        btnEditRole.setOnClickListener(v -> enableEdit(etRole, "role"));
         ivProfilePic = findViewById(R.id.ivProfilePic);
         tvUserName = findViewById(R.id.tvUserName);
         cgSkills = findViewById(R.id.cgSkills);
@@ -105,6 +112,8 @@ public class ProfileActivity extends AppCompatActivity {
         if (value.isEmpty()) return true; // Allow empty if they want to clear it
 
         switch (fieldName) {
+            case "role":
+                return value.length() <= 40; // Limit length so it doesn't break UI
             case "email":
                 return value.matches(EMAIL_PATTERN);
             case "github":
@@ -125,6 +134,9 @@ public class ProfileActivity extends AppCompatActivity {
                         // Safety check for name
                         String name = doc.getString("name");
                         tvUserName.setText(name != null ? name : "AGPIT Member");
+                        // Inside the onSuccess of db.collection("users").document(currentUserId).get()
+                        String role = doc.getString("role");
+                        etRole.setText(role != null ? role : "Set your role");
 
                         etGithub.setText(doc.getString("github"));
                         etLinkedIn.setText(doc.getString("linkedin"));
