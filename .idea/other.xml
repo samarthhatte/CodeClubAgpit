@@ -416,7 +416,7 @@
           <option name="codename" value="b5qsqw" />
           <option name="id" value="b5qsqw" />
           <option name="manufacturer" value="Samsung" />
-          <option name="name" value="Galaxy Z Flip 5" />
+          <option name="name" value="Galaxy Z Flip5" />
           <option name="screenDensity" value="340" />
           <option name="screenX" value="748" />
           <option name="screenY" value="720" />
@@ -427,7 +427,7 @@
           <option name="codename" value="b6q" />
           <option name="id" value="b6q" />
           <option name="manufacturer" value="Samsung" />
-          <option name="name" value="Galaxy Z Flip 6" />
+          <option name="name" value="Galaxy Z Flip6" />
           <option name="screenDensity" value="340" />
           <option name="screenX" value="1080" />
           <option name="screenY" value="2640" />
@@ -438,7 +438,7 @@
           <option name="codename" value="b6qsqw" />
           <option name="id" value="b6qsqw" />
           <option name="manufacturer" value="Samsung" />
-          <option name="name" value="Galaxy Z Flip 6" />
+          <option name="name" value="Galaxy Z Flip6" />
           <option name="screenDensity" value="480" />
           <option name="screenX" value="1080" />
           <option name="screenY" value="2640" />
@@ -549,17 +549,6 @@
           <option name="id" value="dm1q-SM-S911U" />
           <option name="manufacturer" value="Samsung" />
           <option name="name" value="S23" />
-          <option name="screenDensity" value="480" />
-          <option name="screenX" value="1080" />
-          <option name="screenY" value="2340" />
-        </PersistentDeviceSelectionData>
-        <PersistentDeviceSelectionData>
-          <option name="api" value="36" />
-          <option name="brand" value="samsung" />
-          <option name="codename" value="dm1qcsx" />
-          <option name="id" value="dm1qcsx" />
-          <option name="manufacturer" value="Samsung" />
-          <option name="name" value="Galaxy S23" />
           <option name="screenDensity" value="480" />
           <option name="screenX" value="1080" />
           <option name="screenY" value="2340" />
